@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import ContactUsPage from "./pages/ContactUs";
 import DashboardAddPatient from "./pages/DashboardAddPatient";
 import DashboardAddStaff from "./pages/DashboardAddStaff";
+import DashboardDoctor from "./pages/DashboardDoctor";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/dashboard/add-patient" element={<DashboardAddPatient />} />
         <Route path="/dashboard/add-staff" element={<DashboardAddStaff />} />
+        <Route path="/dashboard/doctor" element={<DashboardDoctor />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

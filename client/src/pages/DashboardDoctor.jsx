@@ -1,20 +1,17 @@
 import Layout from "../layout/Layout";
 import { Button, Input, Select, SelectItem } from "@nextui-org/react";
-const DashboardAddPatient = () => {
+const DashboardDoctor = () => {
   return (
     <Layout>
       <div className="flex p-10">
         <div className="flex-1">
           <h1 className="text-2xl text-center font-semibold mt-5">
-            Add Patient
+            Doctor
           </h1>
           <form className="px-10 py-5 flex gap-2 flex-col">
-            <Input type="text" label="Name" placeholder="patient name" />
-            <Input type="text" label="ID No" placeholder="patient ID" />
-            <Input type="text" label="Birth Day" placeholder="patient Phone number" />
-            <Input type="text" label="Phone Number" placeholder="patient Phone number" />
-            <Input type="text" label="Email" placeholder="patient Phone number" />
-            <Input type="text" label="Address" placeholder="patient Phone number" />
+            <Input type="text" label="Add Medical Record" placeholder="Medical Record" />
+            <Input type="text" label="Request x Ray" placeholder="x Ray" />
+            <Input type="text" label="Request Blood Report" placeholder="Blood Report" />
             <Input
               type="text"
               label="Password"
@@ -37,7 +34,7 @@ const DashboardAddPatient = () => {
             />
             <div className="text-center mt-2">
               <button className="bg-blue-500 text-white px-2 py-1 rounded mt-2">
-                Send
+                Scan
               </button>
             </div>
           </div>
@@ -46,4 +43,5 @@ const DashboardAddPatient = () => {
     </Layout>
   );
 };
-export default DashboardAddPatient;
+
+export default DashboardDoctor;

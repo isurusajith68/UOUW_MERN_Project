@@ -34,14 +34,21 @@ const SideBar = () => {
             className="p-2 flex gap-2 hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
           >
             <FaUserPen size={20} />
-            <span className="ml-2">Add Patient</span>
+            <span className="ml-2">Registar</span>
+          </Link>
+          <Link
+            to="/dashboard/doctor"
+            className="p-2 flex gap-2 hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
+          >
+            <FaAddressCard size={20} />
+            <span className="ml-2">Doctor</span>
           </Link>
           <Link
             to="/dashboard/add-staff"
             className="p-2 flex gap-2 hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
           >
             <FaAddressCard size={20} />
-            <span className="ml-2">Add Staff</span>
+            <span className="ml-2">Raidiology</span>
           </Link>
         </div>
       </div>
