@@ -10,6 +10,7 @@ import ContactUsPage from "./pages/ContactUs";
 import DashboardAddPatient from "./pages/DashboardAddPatient";
 import DashboardAddStaff from "./pages/DashboardAddStaff";
 import DashboardDoctor from "./pages/DashboardDoctor";
+import DashboardParmacy from "./pages/DashboardParmacy";
 
 function App() {
   return (
@@ -21,9 +22,13 @@ function App() {
         <Route path="/course" element={<Courses />} />
         <Route path="/staff" element={<OurStaff />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/dashboard/add-patient" element={<DashboardAddPatient />} />
+        <Route
+          path="/dashboard/add-patient"
+          element={<DashboardAddPatient />}
+        />
         <Route path="/dashboard/add-staff" element={<DashboardAddStaff />} />
         <Route path="/dashboard/doctor" element={<DashboardDoctor />} />
+        <Route path="/dashboard/pharmacy" element={<DashboardParmacy />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

@@ -8,21 +8,39 @@ const DashboardAddPatient = () => {
           <h1 className="text-2xl text-center font-semibold mt-5">
             Add Patient
           </h1>
-          <form className="px-10 py-5 flex gap-2 flex-col">
+          <form className="px-10 py-5 flex gap-5 flex-col">
             <Input type="text" label="Name" placeholder="patient name" />
             <Input type="text" label="ID No" placeholder="patient ID" />
-            <Input type="text" label="Birth Day" placeholder="patient Phone number" />
-            <Input type="text" label="Phone Number" placeholder="patient Phone number" />
-            <Input type="text" label="Email" placeholder="patient Phone number" />
-            <Input type="text" label="Address" placeholder="patient Phone number" />
+            <Input
+              type="text"
+              label="Birth Day"
+              placeholder="patient Phone number"
+            />
+            <Input
+              type="text"
+              label="Phone Number"
+              placeholder="patient Phone number"
+            />
+            <Input
+              type="text"
+              label="Email"
+              placeholder="patient Phone number"
+            />
+            <Input
+              type="text"
+              label="Address"
+              placeholder="patient Phone number"
+            />
             <Input
               type="text"
               label="Password"
               placeholder="Enter your email"
             />
-            <Button color="primary" className="mt-2">
-              Submit
-            </Button>
+            <div className="flex justify-end w-full">
+              <Button color="primary" className="mt-2 w-32 ">
+                Submit
+              </Button>
+            </div>
           </form>
         </div>
         <div className="flex-1">
