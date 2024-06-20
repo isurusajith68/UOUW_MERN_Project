@@ -69,7 +69,6 @@ const EditPatientModel = ({
   setValue("email", selectedPatient?.email);
   setValue("dob", selectedPatient?.dob);
 
-
   return (
     <Modal
       size="5xl"
@@ -105,7 +104,6 @@ const EditPatientModel = ({
               </div>
               <div className="flex gap-5">
                 <Input
-                  autoFocus
                   label="ID Number"
                   placeholder="Enter ID Number"
                   variant="bordered"
@@ -123,7 +121,6 @@ const EditPatientModel = ({
               </div>
               <div className="flex gap-5">
                 <Input
-                  autoFocus
                   label="Email"
                   placeholder="Enter Email Address"
                   variant="bordered"

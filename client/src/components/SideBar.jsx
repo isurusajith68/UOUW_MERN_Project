@@ -30,7 +30,7 @@ const SideBar = () => {
             to="/dashboard"
             className={
               pathname === "/dashboard"
-                ? "p-2 mt-3 flex gap-2 text-blue-400 hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
+                ? "p-2 mt-3 flex gap-2 text-blue-600 hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
                 : "p-2 mt-3 flex gap-2  hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
             }
           >
@@ -41,7 +41,7 @@ const SideBar = () => {
             to="/dashboard/add-patient"
             className={
               pathname === "/dashboard/add-patient"
-                ? "p-2 flex gap-2 text-blue-400 hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
+                ? "p-2 flex gap-2 text-blue-600 hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
                 : "p-2 flex gap-2  hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
             }
           >
@@ -52,7 +52,7 @@ const SideBar = () => {
             to="/dashboard/doctor"
             className={
               pathname === "/dashboard/doctor"
-                ? "p-2 flex gap-2 text-blue-400 hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
+                ? "p-2 flex gap-2 text-blue-600 hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
                 : "p-2 flex gap-2  hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
             }
           >
@@ -63,7 +63,7 @@ const SideBar = () => {
             to="/dashboard/add-staff"
             className={
               pathname === "/dashboard/add-staff"
-                ? "p-2 flex gap-2 text-blue-400 hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
+                ? "p-2 flex gap-2 text-blue-600 hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
                 : "p-2 flex gap-2  hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
             }
           >
@@ -74,7 +74,7 @@ const SideBar = () => {
             to="/dashboard/pharmacy"
             className={
               pathname === "/dashboard/pharmacy"
-                ? "p-2 flex gap-2 text-blue-400 hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
+                ? "p-2 flex gap-2 text-blue-600 hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
                 : "p-2 flex gap-2  hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
             }
           >

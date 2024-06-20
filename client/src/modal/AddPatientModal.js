@@ -167,7 +167,7 @@ const AddPatientModel = ({ isOpen, onOpenChange }) => {
                 </div>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="flat" onClick={clearFormValues}>
+                <Button color="danger" variant="light" onClick={clearFormValues}>
                   Clear
                 </Button>
                 <Button

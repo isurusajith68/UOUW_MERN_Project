@@ -6,13 +6,13 @@ const DashBordNav = () => {
     <div>
       <nav className="bg-gray-200 p-2 rounded-lg ">
         <div className="flex justify-between">
-          <div className="flex gap-2">
+          <div className="flex gap-2 items-center">
             <input
               type="text"
-              className="p-2 rounded-lg w-72"
+              className="p-2 rounded-lg w-72 h-10"
               placeholder="Search"
             />
-            <button className="bg-blue-400 text-white p-2 rounded-lg">
+            <button className="bg-blue-600 text-white px-2 py-1 rounded-lg  h-10">
               Search
             </button>
           </div>

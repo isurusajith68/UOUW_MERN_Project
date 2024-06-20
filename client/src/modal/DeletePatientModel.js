@@ -39,7 +39,7 @@ const DeletePatientModel = ({
               <Button color="success" variant="light" onPress={onClose}>
                 Close
               </Button>
-              <Button color="danger" variant="light" onClick={deletePatient}>
+              <Button color="danger" variant="solid" onClick={deletePatient}>
                 Delete
               </Button>
             </ModalFooter>
