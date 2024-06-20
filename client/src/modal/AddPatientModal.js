@@ -10,11 +10,13 @@ import {
   Select,
   SelectItem,
   Textarea,
+  useDisclosure,
 } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { bloodGroups } from "../data/bloodGroups";
+import QrModal from "./QrModal";
 
 const schema = yup.object().shape({
   firstName: yup.string().required("First name is required"),
@@ -37,6 +39,11 @@ const schema = yup.object().shape({
 
 const AddPatientModel = ({ isOpen, onOpenChange }) => {
   const {
+    isOpen: isQrOpen,
+    onOpen: openQr,
+    onOpenChange: onQrChange,
+  } = useDisclosure();
+  const {
     register,
     handleSubmit,
     formState: { errors },
@@ -47,7 +54,7 @@ const AddPatientModel = ({ isOpen, onOpenChange }) => {
   });
 
   const onSubmit = (data) => {
-    onOpenChange();
+    openQr();
   };
 
   const clearFormValues = () => {
@@ -175,6 +182,7 @@ const AddPatientModel = ({ isOpen, onOpenChange }) => {
           </>
         )}
       </ModalContent>
+      <QrModal isOpen={isQrOpen} onOpenChange={onQrChange} onOpen={openQr} />
     </Modal>
   );
 };
