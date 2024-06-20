@@ -1,5 +1,6 @@
 import {
   Button,
+  DatePicker,
   Input,
   Modal,
   ModalBody,
@@ -40,6 +41,7 @@ const AddPatientModel = ({ isOpen, onOpenChange }) => {
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -58,6 +60,8 @@ const AddPatientModel = ({ isOpen, onOpenChange }) => {
       placement="top-center"
       isOpen={isOpen}
       onOpenChange={onOpenChange}
+      isDismissable={false}
+      isKeyboardDismissDisabled={true}
     >
       <ModalContent>
         {(onClose) => (
@@ -115,13 +119,15 @@ const AddPatientModel = ({ isOpen, onOpenChange }) => {
                     errorMessage={errors.email?.message}
                     isInvalid={errors.email}
                   />
-                  <Input
-                    label="DOB"
-                    placeholder="Enter Date of Birth"
+                  <DatePicker
+                    autoFocus
+                    label="Birth Date"
                     variant="bordered"
-                    {...register("dob")}
-                    errorMessage={errors.dob?.message}
-                    isInvalid={errors.dob}
+                    showMonthAndYearPickers
+                    isRequired
+                    onChange={(date) => {
+                      setValue("dob", date);
+                    }}
                   />
                 </div>
                 <div className="flex gap-5">

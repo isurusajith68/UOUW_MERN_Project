@@ -18,10 +18,12 @@ import ClickShowMore from "../modal/ClickShowMore";
 import EditPatientModel from "../modal/EditPatientModal";
 import { useMemo, useState } from "react";
 import { Patient } from "../data/patients";
+import DeletePatientModel from "../modal/DeletePatientModel";
 
 const PatientsList = () => {
   const [page, setPage] = useState(1);
   const [selectedPatient, setSelectedPatient] = useState(null);
+  const [selectedPatientId, setSelectedPatientId] = useState(null);
 
   const rowsPerPage = 6;
   const pages = Math.ceil(Patient.length / rowsPerPage);
@@ -50,6 +52,12 @@ const PatientsList = () => {
     onOpenChange: onEditChange,
   } = useDisclosure();
 
+  const {
+    isOpen: isDeleteOpen,
+    onOpen: openDelete,
+    onOpenChange: onDeleteChange,
+  } = useDisclosure();
+
   const handleShowMore = (patient) => {
     setSelectedPatient(patient);
     openShowMore();
@@ -61,7 +69,8 @@ const PatientsList = () => {
   };
 
   const handleDelete = (id) => {
-    console.log(id);
+    setSelectedPatientId(id);
+    openDelete();
   };
 
   return (
@@ -139,6 +148,13 @@ const PatientsList = () => {
         onOpenChange={onEditChange}
         selectedPatient={selectedPatient}
         setSelectedPatient={setSelectedPatient}
+      />
+
+      <DeletePatientModel
+        isOpen={isDeleteOpen}
+        onOpenChange={onDeleteChange}
+        selectedPatientId={selectedPatientId}
+        setSelectedPatientId={setSelectedPatientId}
       />
     </div>
   );

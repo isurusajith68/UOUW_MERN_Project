@@ -8,7 +8,7 @@ export const Patient = [
     bloodGroup: "A+",
     address: "No 123, Colombo",
     email: "janith@gmail.com",
-    dob: "1995-12-12",
+    dob: "1998/12/12",
   },
   {
     id: 2,

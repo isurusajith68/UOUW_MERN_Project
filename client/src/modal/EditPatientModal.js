@@ -1,5 +1,6 @@
 import {
   Button,
+  DatePicker,
   Input,
   Modal,
   ModalBody,
@@ -68,12 +69,15 @@ const EditPatientModel = ({
   setValue("email", selectedPatient?.email);
   setValue("dob", selectedPatient?.dob);
 
+
   return (
     <Modal
       size="5xl"
       placement="top-center"
       isOpen={isOpen}
       onOpenChange={onOpenChange}
+      isDismissable={false}
+      isKeyboardDismissDisabled={true}
     >
       <ModalContent>
         {(onClose) => (
@@ -133,6 +137,7 @@ const EditPatientModel = ({
                   variant="bordered"
                   {...register("dob")}
                   isDisabled
+                  value={selectedPatient?.dob}
                 />
               </div>
               <div className="flex gap-5">
@@ -165,17 +170,6 @@ const EditPatientModel = ({
               </div>
             </ModalBody>
             <ModalFooter>
-              <Button
-                color="danger"
-                variant="flat"
-                onPress={() => {
-                  clearFormValues();
-                  onClose();
-                  setSelectedPatient(null);
-                }}
-              >
-                Clear
-              </Button>
               <Button
                 color="primary"
                 onPress={handleSubmit(onSubmit)}

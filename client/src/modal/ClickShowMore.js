@@ -9,7 +9,12 @@ import {
 
 const ClickShowMore = ({ isOpen, onOpenChange, patient }) => {
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+    <Modal
+      isOpen={isOpen}
+      onOpenChange={onOpenChange}
+      isDismissable={false}
+      isKeyboardDismissDisabled={true}
+    >
       <ModalContent>
         {(onClose) => (
           <>
