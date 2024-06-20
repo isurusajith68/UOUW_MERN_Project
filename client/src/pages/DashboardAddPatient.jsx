@@ -1,5 +1,6 @@
 import Layout from "../layout/Layout";
-import { Button, Input, Select, SelectItem } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
+
 const DashboardAddPatient = () => {
   return (
     <Layout>
