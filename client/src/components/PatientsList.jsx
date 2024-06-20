@@ -91,30 +91,32 @@ const PatientsList = () => {
         >
           <TableHeader>
             <TableColumn>Id</TableColumn>
+            <TableColumn>Id Number</TableColumn>
             <TableColumn>First Name</TableColumn>
             <TableColumn>Last Name</TableColumn>
             <TableColumn>Phone Number</TableColumn>
             <TableColumn>Action</TableColumn>
           </TableHeader>
           <TableBody>
-            {items.map((item) => (
+            {items.map((item, index) => (
               <TableRow key={item.id}>
+                <TableCell>{index + 1}</TableCell>
                 <TableCell>{item.idNumber}</TableCell>
                 <TableCell>{item.firstName}</TableCell>
                 <TableCell>{item.lastName}</TableCell>
                 <TableCell>{item.phoneNumber}</TableCell>
-                <TableCell className="flex gap-4">
+                <TableCell className="flex gap-6">
                   <Tooltip content="Details">
                     <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
                       <FaRegEye onClick={() => handleShowMore(item)} />
                     </span>
                   </Tooltip>
-                  <Tooltip content="Edit user">
+                  <Tooltip content="Edit patient">
                     <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
                       <FaUserEdit onClick={() => handleEdit(item)} />
                     </span>
                   </Tooltip>
-                  <Tooltip color="danger" content="Delete user">
+                  <Tooltip color="danger" content="Delete patient">
                     <span className="text-lg text-danger cursor-pointer active:opacity-50">
                       <MdDeleteSweep onClick={() => handleDelete(item.id)} />
                     </span>
