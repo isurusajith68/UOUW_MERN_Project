@@ -11,12 +11,16 @@ import DashboardAddPatient from "./pages/DashboardAddPatient";
 import DashboardAddStaff from "./pages/DashboardAddStaff";
 import DashboardDoctor from "./pages/DashboardDoctor";
 import DashboardParmacy from "./pages/DashboardParmacy";
+import Login from "./pages/Login";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <BrowserRouter>
+      <Toaster position="top-center" />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/contact" element={<ContactUsPage />} />
         <Route path="/about" element={<About />} />
         <Route path="/course" element={<Courses />} />

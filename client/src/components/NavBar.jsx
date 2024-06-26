@@ -31,10 +31,10 @@ const NavBar = () => {
         </div>
       </div>
       <div className="flex gap-5 justify-center items-center">
-        <div className="flex items-center gap-2 text-gray-700 text-sm">
+        <Link to="/login" className="flex items-center gap-2 text-gray-700 text-sm">
           <BiUser />
           <button>Login</button>
-        </div>
+        </Link>
       </div>
     </nav>
   );

@@ -1,7 +1,6 @@
 import {
   Button,
   Divider,
-  Image,
   Modal,
   ModalBody,
   ModalContent,
@@ -10,27 +9,42 @@ import {
 } from "@nextui-org/react";
 import { CiCircleCheck } from "react-icons/ci";
 import html2canvas from "html2canvas";
-import React, { useState, useRef } from "react";
-import qrdummy from "../assets/qrdummy.png";
+import React from "react";
+import QRCode from "qrcode.react";
 
-const QrModal = ({ isOpen, onOpenChange, onOpen }) => {
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
-  const imgRef = useRef(null);
-
-  const handleImageLoad = () => {
-    setIsImageLoaded(true);
-  };
-
+const QrModal = ({ isOpen, onOpenChange, onOpen, patientID, patientsData }) => {
   const downloadImage = () => {
     const element = document.getElementById("qr-data");
-    html2canvas(element).then((canvas) => {
+
+    const wrapper = document.createElement("div");
+    wrapper.style.padding = "10px";
+    wrapper.style.width = `${element.offsetWidth}px`;
+    wrapper.style.backgroundColor = "#ffffff";
+    const qrCodeElement = (
+      <QRCode value={patientID} size={128} renderAs="canvas" />
+    );
+    const clonedElement = element.cloneNode(true);
+    wrapper.appendChild(clonedElement);
+
+    document.body.appendChild(wrapper);
+
+    html2canvas(wrapper).then((canvas) => {
       const link = document.createElement("a");
       link.href = canvas.toDataURL("image/png");
       link.download = "QR_Data.png";
       link.click();
+
+      document.body.removeChild(wrapper);
     });
   };
-
+  const handleDownload = () => {
+    const canvas = document.getElementById("qrcode");
+    const url = canvas.toDataURL("image/png");
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "qrcode.png";
+    link.click();
+  };
   return (
     <Modal
       size="lg"
@@ -59,42 +73,43 @@ const QrModal = ({ isOpen, onOpenChange, onOpen }) => {
                 className="flex  gap-5 border-gray-600 border rounded-lg py-2 px-2"
               >
                 <div className=" justify-start flex">
-                  <Image
-                    ref={imgRef}
-                    src={qrdummy}
-                    alt="QR Code"
-                    onLoad={handleImageLoad}
-                  />
+                  {patientID && (
+                    <div>
+                      <QRCode id="qrcode" value={patientID} />
+                    </div>
+                  )}
                 </div>
                 <div className=" justify-start flex">
-                  <div className="flex gap-2">
-                    <div className="flex gap-3 flex-col text-sm">
+                  <div className="flex gap-2 justify-start">
+                    <div className="flex gap-2 flex-col text-sm justify-center">
                       <div className="font-semibold">Base Hospital</div>
                       <span>Name</span>
                       <span>NIC</span>
                       <span>Phone Number</span>
                       <span>Email</span>
                     </div>
-                    <div className="flex gap-3 flex-col text-sm">
+                    <div className="flex gap-2 flex-col text-sm  justify-center">
                       <div className="flex gap-2">
                         <span>:</span>
                         <div className="font-semibold">Kolonna</div>
                       </div>
                       <div className="flex gap-2">
                         <span>:</span>
-                        <div className="">Nimal</div>
+                        <div className="">
+                          {patientsData.firstName + patientsData.lastName}
+                        </div>
                       </div>
                       <div className="flex gap-2">
                         <span>:</span>
-                        <div className="">23658745237v</div>
+                        <div className="">{patientsData.idNumber}</div>
                       </div>
                       <div className="flex gap-2">
                         <span>:</span>
-                        <div className="">081-1234567</div>
+                        <div className="">{patientsData.phoneNumber}</div>
                       </div>
                       <div className="flex gap-2">
                         <span>:</span>
-                        <div className="">nimal@gmail.com</div>
+                        <div className="">{patientsData.email}</div>
                       </div>
                     </div>
                   </div>
@@ -103,10 +118,10 @@ const QrModal = ({ isOpen, onOpenChange, onOpen }) => {
             </ModalBody>
             <ModalFooter>
               <Button
-                onClick={isImageLoaded ? downloadImage : null}
+                onClick={patientID ? handleDownload : null}
                 color="success"
                 variant="solid"
-                disabled={!isImageLoaded}
+                disabled={!patientID}
                 onPress={onClose}
               >
                 Download

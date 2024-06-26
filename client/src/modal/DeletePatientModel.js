@@ -6,17 +6,30 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@nextui-org/react";
+import axios from "axios";
 
 const DeletePatientModel = ({
   isOpen,
   onOpenChange,
   selectedPatientId,
   setSelectedPatientId,
+  setRefetch,
 }) => {
   const deletePatient = () => {
-    console.log(selectedPatientId);
+    if (selectedPatientId) {
+      try {
+        axios.delete(`http://localhost:5000/patients/${selectedPatientId}`);
+        setSelectedPatientId(null);
+        setRefetch((prev) => !prev);
+      } catch (error) {
+        console.log(error);
+      }
+    }
     onOpenChange();
   };
+
+  console.log(selectedPatientId);
+
   return (
     <Modal
       isOpen={isOpen}
@@ -39,7 +52,12 @@ const DeletePatientModel = ({
               <Button color="success" variant="light" onPress={onClose}>
                 Close
               </Button>
-              <Button color="danger" variant="solid" onClick={deletePatient}>
+              <Button
+                disabled={!selectedPatientId}
+                color="danger"
+                variant="solid"
+                onClick={deletePatient}
+              >
                 Delete
               </Button>
             </ModalFooter>

@@ -1,5 +1,6 @@
 import CardStarter from "../components/CardStarter";
 import PatientsList from "../components/PatientsList";
+import PatientsListAdmin from "../components/PatientsListAdmin";
 import Layout from "../layout/Layout";
 
 const Dashboard = () => {
@@ -10,7 +11,7 @@ const Dashboard = () => {
           <CardStarter />
         </div>
         <div className="px-10 mt-2 py-5">
-          <PatientsList />
+          <PatientsListAdmin />
         </div>
       </div>
     </Layout>

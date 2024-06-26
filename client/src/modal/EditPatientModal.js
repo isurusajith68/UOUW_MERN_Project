@@ -15,6 +15,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { bloodGroups } from "../data/bloodGroups";
+import axios from "axios";
 
 const schema = yup.object().shape({
   firstName: yup.string().required("First name is required"),
@@ -40,6 +41,7 @@ const EditPatientModel = ({
   onOpenChange,
   selectedPatient,
   setSelectedPatient,
+  setRefetch
 }) => {
   const {
     register,
@@ -51,9 +53,20 @@ const EditPatientModel = ({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+    try {
+      const res = await axios.put(
+        `http://localhost:5000/patients/${selectedPatient._id}`,
+        data
+      );
+      setRefetch((prev) => !prev);
+      setSelectedPatient(null);
+      setSelectedPatient(res.data.patient);
+    } catch (error) {
+      console.log(error);
+    }
+
     onOpenChange();
-    console.log(data);
   };
 
   const clearFormValues = () => {

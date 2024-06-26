@@ -17,6 +17,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { bloodGroups } from "../data/bloodGroups";
 import QrModal from "./QrModal";
+import axios from "axios";
+import { useState } from "react";
 
 const schema = yup.object().shape({
   firstName: yup.string().required("First name is required"),
@@ -37,7 +39,10 @@ const schema = yup.object().shape({
   dob: yup.string().required("Date of birth is required"),
 });
 
-const AddPatientModel = ({ isOpen, onOpenChange }) => {
+const AddPatientModel = ({ isOpen, onOpenChange, setRefetch }) => {
+  const [qrId, setQrId] = useState("");
+  const [patientsData, setPatientsData] = useState("");
+
   const {
     isOpen: isQrOpen,
     onOpen: openQr,
@@ -53,8 +58,18 @@ const AddPatientModel = ({ isOpen, onOpenChange }) => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => {
-    openQr();
+  const onSubmit = async (data) => {
+    try {
+      const res = await axios.post("http://localhost:5000/patients", data);
+      // console.log(res.data);
+
+      setQrId(res.data.patient._id);
+      setPatientsData(res.data.patient);
+      setRefetch((prev) => !prev);
+      openQr();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const clearFormValues = () => {
@@ -167,7 +182,11 @@ const AddPatientModel = ({ isOpen, onOpenChange }) => {
                 </div>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onClick={clearFormValues}>
+                <Button
+                  color="danger"
+                  variant="light"
+                  onClick={clearFormValues}
+                >
                   Clear
                 </Button>
                 <Button
@@ -182,7 +201,13 @@ const AddPatientModel = ({ isOpen, onOpenChange }) => {
           </>
         )}
       </ModalContent>
-      <QrModal isOpen={isQrOpen} onOpenChange={onQrChange} onOpen={openQr} />
+      <QrModal
+        isOpen={isQrOpen}
+        onOpenChange={onQrChange}
+        onOpen={openQr}
+        patientID={qrId}
+        patientsData={patientsData}
+      />
     </Modal>
   );
 };

@@ -20,13 +20,11 @@ import { useEffect, useMemo, useState } from "react";
 import { Patient } from "../data/patients";
 import DeletePatientModel from "../modal/DeletePatientModel";
 
-const PatientsList = () => {
+const PatientsListAdmin = () => {
   const [page, setPage] = useState(1);
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [selectedPatientId, setSelectedPatientId] = useState(null);
   const [Patient, setPatient] = useState([]);
-  const [refetch, setRefetch] = useState(false);
-
   const rowsPerPage = 6;
   const pages = Math.ceil(Patient.length / rowsPerPage);
 
@@ -87,15 +85,11 @@ const PatientsList = () => {
     };
 
     fetchPatients();
-  }, [refetch]);
-
+  }, []);
   return (
     <div>
       <div className="flex justify-between p-2">
         <h1 className="text-center mt-2 font-semibold">Patients List</h1>
-        <Button onPress={openModal} color="primary">
-          Add Patient
-        </Button>
       </div>
       <div className="w-[1000px] mt-2">
         <Table
@@ -120,7 +114,6 @@ const PatientsList = () => {
             <TableColumn>First Name</TableColumn>
             <TableColumn>Last Name</TableColumn>
             <TableColumn>Phone Number</TableColumn>
-            <TableColumn>Action</TableColumn>
           </TableHeader>
           <TableBody>
             {items.map((item, index) => (
@@ -130,34 +123,13 @@ const PatientsList = () => {
                 <TableCell>{item.firstName}</TableCell>
                 <TableCell>{item.lastName}</TableCell>
                 <TableCell>{item.phoneNumber}</TableCell>
-                <TableCell className="flex gap-6">
-                  <Tooltip content="Details">
-                    <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                      <FaRegEye onClick={() => handleShowMore(item)} />
-                    </span>
-                  </Tooltip>
-                  <Tooltip content="Edit patient">
-                    <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                      <FaUserEdit onClick={() => handleEdit(item)} />
-                    </span>
-                  </Tooltip>
-                  <Tooltip color="danger" content="Delete patient">
-                    <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                      <MdDeleteSweep onClick={() => handleDelete(item._id)} />
-                    </span>
-                  </Tooltip>
-                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </div>
 
-      <AddPatientModel
-        isOpen={isModalOpen}
-        setRefetch={setRefetch}
-        onOpenChange={onModalChange}
-      />
+      <AddPatientModel isOpen={isModalOpen} onOpenChange={onModalChange} />
       <ClickShowMore
         isOpen={isShowMoreOpen}
         onOpenChange={onShowMoreChange}
@@ -168,7 +140,6 @@ const PatientsList = () => {
         onOpenChange={onEditChange}
         selectedPatient={selectedPatient}
         setSelectedPatient={setSelectedPatient}
-        setRefetch={setRefetch}
       />
 
       <DeletePatientModel
@@ -176,10 +147,9 @@ const PatientsList = () => {
         onOpenChange={onDeleteChange}
         selectedPatientId={selectedPatientId}
         setSelectedPatientId={setSelectedPatientId}
-        setRefetch={setRefetch}
       />
     </div>
   );
 };
 
-export default PatientsList;
+export default PatientsListAdmin;
