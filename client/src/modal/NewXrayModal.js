@@ -27,6 +27,7 @@ const NewXrayModal = ({ isOpen, onOpenChange }) => {
               <ModalBody>
                 <div className="flex gap-5">
                 <Textarea
+                    autoFocus
                     label="X-Ray"
                     placeholder="Enter X-Ray"
                   />

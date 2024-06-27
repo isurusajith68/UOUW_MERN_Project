@@ -29,6 +29,7 @@ const AddMedicaleRecordModal = ({ isOpen, onOpenChange }) => {
               <ModalBody>
                 <div className="flex gap-5">
                 <Textarea
+                    autoFocus
                     label="Medical Record"
                     placeholder="Enter Medical Record"
                   />
