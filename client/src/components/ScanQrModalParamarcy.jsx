@@ -11,10 +11,10 @@ import {
 import { toast } from "react-hot-toast";
 import QrScanner from "qr-scanner";
 
-const ScanQrModal = ({ isOpen, onOpenChange, setDatac }) => {
+const ScanQrModalParamarcy = ({ isOpen, onOpenChange, setData }) => {
   const [loading, setLoading] = useState(false);
   const videoElementRef = useRef(null);
-  const [scannedText,setScannedText] = useState("");
+  const [scanData, setScannedText] = useState("");
   const qrScannerRef = useRef(null);
 
   const handleScan = (data) => {
@@ -33,9 +33,9 @@ const ScanQrModal = ({ isOpen, onOpenChange, setDatac }) => {
       } else if (response.status === 200) {
         const data = await response.json();
         const patient = data.patient;
-        setDatac(patient);
+        setData(patient);
         toast.success("Successfully retrieved patient.");
-        onOpenChange(false);
+        onOpenChange(false); // Close the modal after successful scan
       }
     } catch (error) {
       console.error("Error retrieving patient:", error);
@@ -122,4 +122,4 @@ const ScanQrModal = ({ isOpen, onOpenChange, setDatac }) => {
   );
 };
 
-export default ScanQrModal;
+export default ScanQrModalParamarcy;
