@@ -174,11 +174,16 @@ const DashboardDoctor = () => {
       <AddNewRecordModal
         isOpen={isAddNewRecordOpen}
         onOpenChange={onAddNewRecordChange}
+        datac={datac}
       />
 
-      <NewXrayModal isOpen={isXrayOpen} onOpenChange={onXrayChange} />
+      <NewXrayModal isOpen={isXrayOpen} onOpenChange={onXrayChange} 
+      datac={datac}
+      />
 
-      <NewBloodReportModal isOpen={isBloodOpen} onOpenChange={onBloodChange} />
+      <NewBloodReportModal isOpen={isBloodOpen} onOpenChange={onBloodChange} 
+      datac={datac}
+      />
 
       <ClinicDateModal
         isOpen={isClinicDateOpen}

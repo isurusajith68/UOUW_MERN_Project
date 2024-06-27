@@ -8,8 +8,43 @@ import {
   ModalHeader,
   Textarea
 } from "@nextui-org/react";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import axios from "axios";
 
-const NewBloodReportModal = ({ isOpen, onOpenChange }) => {
+const NewBloodReportModal = ({ isOpen, onOpenChange, datac }) => {
+  const [bloodReport, setBloodReport] = useState("");
+
+  const handleBloodReportChange = (e) => {
+    setBloodReport(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!datac?._id) {
+      return toast.error("Patient ID is required please scan the QR code");
+    }
+
+    if (!bloodReport) {
+      return toast.error("Blood Report is required");
+    }
+
+    const medical = {
+      patientId: datac?._id,
+      bloodReport: bloodReport,
+    };
+
+    const res = await axios.post(
+      "http://localhost:5000/medical-record",
+      medical
+    );
+    console.log(res);
+    if (res.status === 200) {
+      toast.success("Blood Report Added Successfully");
+      onOpenChange();
+    }
+  };
+
   return (
     <Modal
       size="lg"
@@ -32,6 +67,7 @@ const NewBloodReportModal = ({ isOpen, onOpenChange }) => {
                     autoFocus
                     label="Blood Report"
                     placeholder="Enter Blood Report"
+                    onChange={handleBloodReportChange}
                   />
                 </div>
               </ModalBody>
@@ -39,7 +75,7 @@ const NewBloodReportModal = ({ isOpen, onOpenChange }) => {
                 <Button color="danger" variant="light">
                   Clear
                 </Button>
-                <Button color="primary" type="submit">
+                <Button color="primary" type="submit" onClick={handleSubmit}>
                   Register
                 </Button>
               </ModalFooter>

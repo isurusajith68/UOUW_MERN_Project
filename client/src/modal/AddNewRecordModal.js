@@ -6,10 +6,46 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  Textarea
+  Textarea,
 } from "@nextui-org/react";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import axios from "axios";
 
-const AddNewRecordModal = ({ isOpen, onOpenChange }) => {
+const AddNewRecordModal = ({ isOpen, onOpenChange, datac }) => {
+  const [prescription, setPrescription] = useState("");
+
+  const handlePrescriptionChange = (e) => {
+    setPrescription(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!datac?._id) {
+      return toast.error("Patient ID is required please scan the QR code");
+    }
+
+    if (!prescription) {
+      return toast.error("Prescriotopn is required");
+    }
+
+    const medical = {
+      patientId: datac?._id,
+      prescription: prescription,
+    };
+
+    const res = await axios.post(
+      "http://localhost:5000/medical-record",
+      medical
+    );
+    console.log(res);
+    if (res.status === 200) {
+      toast.success("Prescrioption Added Successfully");
+      onOpenChange();
+    }
+  };
+
+
   return (
     <Modal
       size="lg"
@@ -39,6 +75,7 @@ const AddNewRecordModal = ({ isOpen, onOpenChange }) => {
                     autoFocus
                     label="Address"
                     placeholder="Enter address"
+                    onChange={handlePrescriptionChange}
                   />
                 </div>
               </ModalBody>
@@ -46,7 +83,7 @@ const AddNewRecordModal = ({ isOpen, onOpenChange }) => {
                 <Button color="danger" variant="light">
                   Clear
                 </Button>
-                <Button color="primary" type="submit">
+                <Button color="primary" type="submit" onClick={handleSubmit}>
                   Register
                 </Button>
               </ModalFooter>

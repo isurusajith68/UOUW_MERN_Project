@@ -8,8 +8,44 @@ import {
   ModalHeader,
   Textarea
 } from "@nextui-org/react";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import axios from "axios";
 
-const NewXrayModal = ({ isOpen, onOpenChange }) => {
+const NewXrayModal = ({ isOpen, onOpenChange, datac }) => {
+  const [xray, setXray] = useState("");
+
+  const handleXrayChange = (e) => {
+    setXray(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!datac?._id) {
+      return toast.error("Patient ID is required please scan the QR code");
+    }
+
+    if (!xray) {
+      return toast.error("X-Ray is required");
+    }
+
+    const medical = {
+      patientId: datac?._id,
+      xray: xray,
+    };
+
+    const res = await axios.post(
+      "http://localhost:5000/medical-record",
+      medical
+    );
+    console.log(res);
+    if (res.status === 200) {
+      toast.success("X-Ray Added Successfully");
+      onOpenChange();
+    }
+  };
+
+
   return (
     <Modal
       size="lg"
@@ -30,6 +66,7 @@ const NewXrayModal = ({ isOpen, onOpenChange }) => {
                     autoFocus
                     label="X-Ray"
                     placeholder="Enter X-Ray"
+                    onChange={handleXrayChange}
                   />
                 </div>
               </ModalBody>
@@ -37,7 +74,7 @@ const NewXrayModal = ({ isOpen, onOpenChange }) => {
                 <Button color="danger" variant="light">
                   Clear
                 </Button>
-                <Button color="primary" type="submit">
+                <Button color="primary" type="submit" onClick={handleSubmit}>
                   Register
                 </Button>
               </ModalFooter>
