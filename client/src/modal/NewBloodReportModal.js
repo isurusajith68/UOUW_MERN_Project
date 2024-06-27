@@ -6,6 +6,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Textarea
 } from "@nextui-org/react";
 
 const NewBloodReportModal = ({ isOpen, onOpenChange }) => {
@@ -27,11 +28,10 @@ const NewBloodReportModal = ({ isOpen, onOpenChange }) => {
             <form>
               <ModalBody>
                 <div className="flex gap-5">
-                  <Input
+                <Textarea
                     autoFocus
-                    label="First Name"
-                    placeholder="Enter your first name"
-                    variant="bordered"
+                    label="Blood Report"
+                    placeholder="Enter Blood Report"
                   />
                 </div>
               </ModalBody>

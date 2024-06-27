@@ -36,6 +36,7 @@ const AddNewRecordModal = ({ isOpen, onOpenChange }) => {
                   /> */}
 
                   <Textarea
+                    autoFocus
                     label="Address"
                     placeholder="Enter address"
                   />

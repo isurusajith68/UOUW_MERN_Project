@@ -6,6 +6,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  DatePicker
 } from "@nextui-org/react";
 
 const ClinicDateModal = ({ isOpen, onOpenChange }) => {
@@ -27,11 +28,15 @@ const ClinicDateModal = ({ isOpen, onOpenChange }) => {
             <form>
               <ModalBody>
                 <div className="flex gap-5">
-                  <Input
+                <DatePicker
                     autoFocus
-                    label="First Name"
-                    placeholder="Enter your first name"
+                    label="Clinic Date"
                     variant="bordered"
+                    showMonthAndYearPickers
+                    isRequired
+                    onChange={(date) => {
+                      // setValue("dob", date);
+                    }}
                   />
                 </div>
               </ModalBody>
