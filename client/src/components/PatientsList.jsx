@@ -25,6 +25,7 @@ const PatientsList = () => {
   const [selectedPatientId, setSelectedPatientId] = useState(null);
   const [Patient, setPatient] = useState([]);
   const [refetch, setRefetch] = useState(false);
+  const [refetchc, setRefcetch] = useState(false);
 
   const rowsPerPage = 6;
   const pages = Math.ceil(Patient.length / rowsPerPage);
