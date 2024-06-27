@@ -81,34 +81,50 @@ const SideBar = () => {
             <FaAddressCard size={20} />
             <span className="ml-2">Doctor</span>
           </Link>
-          {/* )} */}
-          {user?.role === "rediologist" && (
-            <Link
-              to="/dashboard/add-staff"
-              className={
-                pathname === "/dashboard/add-staff"
-                  ? "p-2 flex gap-2 text-blue-600 hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
-                  : "p-2 flex gap-2  hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
-              }
-            >
-              <FaAddressCard size={20} />
-              <span className="ml-2">Raidiology</span>
-            </Link>
-          )}
 
-          {user?.role === "pharmacist" && (
-            <Link
-              to="/dashboard/pharmacy"
-              className={
-                pathname === "/dashboard/pharmacy"
-                  ? "p-2 flex gap-2 text-blue-600 hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
-                  : "p-2 flex gap-2  hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
-              }
-            >
-              <FaAddressCard size={20} />
-              <span className="ml-2">Pharmacist</span>
-            </Link>
-          )}
+          {/* )} */}
+
+          {/* {user?.role === "pharmacist" && ( */}
+          <Link
+            to="/dashboard/pharmacy"
+            className={
+              pathname === "/dashboard/pharmacy"
+                ? "p-2 flex gap-2 text-blue-600 hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
+                : "p-2 flex gap-2  hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
+            }
+          >
+            <FaAddressCard size={20} />
+            <span className="ml-2">Pharmacist</span>
+          </Link>
+          {/* )} */}
+          
+          {/* {user?.role === "laboratory" && ( */}
+          <Link
+            to="/dashboard/laboratory"
+            className={
+              pathname === "/dashboard/laboratory"
+                ? "p-2 flex gap-2 text-blue-600 hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
+                : "p-2 flex gap-2  hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
+            }
+          >
+            <FaAddressCard size={20} />
+            <span className="ml-2">Laboratory</span>
+          </Link>
+
+          {/* )} */}
+          {/* {user?.role === "rediologist" && ( */}
+          <Link
+            to="/dashboard/add-staff"
+            className={
+              pathname === "/dashboard/add-staff"
+                ? "p-2 flex gap-2 text-blue-600 hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
+                : "p-2 flex gap-2  hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
+            }
+          >
+            <FaAddressCard size={20} />
+            <span className="ml-2">Raidiology</span>
+          </Link>
+          {/* )} */}
         </div>
       </div>
       <div className="px-4">
