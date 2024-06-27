@@ -123,34 +123,34 @@ const DashboardDoctor = () => {
           <div className="flex flex-col gap-3">
             <button
               onClick={openAddMedicaleRecord}
-              className="border px-20 py-2 rounded-lg border-white text-sm bg-red-400 text-white hover:bg-red-600"
+              className="border px-20 py-2 rounded-lg border-white text-sm bg-blue-600 text-white hover:bg-blue-800"
             >
               Add Medicale Record
             </button>
             <button
               onClick={openAddNewRecord}
-              className="border px-20 py-2 rounded-lg border-white text-sm bg-red-400 text-white hover:bg-red-600"
+              className="border px-20 py-2 rounded-lg border-white text-sm bg-blue-600 text-white hover:bg-blue-800"
             >
               New Recode
             </button>
 
             <button
               onClick={openXray}
-              className="border px-20 py-2 rounded-lg border-white text-sm bg-red-400 text-white hover:bg-red-600"
+              className="border px-20 py-2 rounded-lg border-white text-sm bg-blue-600 text-white hover:bg-blue-800"
             >
               New X-ray
             </button>
 
             <button
               onClick={openBlood}
-              className="border px-20 py-2 rounded-lg border-white text-sm bg-red-400 text-white hover:bg-red-600"
+              className="border px-20 py-2 rounded-lg border-white text-sm bg-blue-600 text-white hover:bg-blue-800"
             >
               New Blood Report
             </button>
 
             <button
               onClick={openClinicDate}
-              className="border px-20 py-2 rounded-lg border-white text-sm bg-red-400 text-white hover:bg-red-600"
+              className="border px-20 py-2 rounded-lg border-white text-sm bg-blue-600 text-white hover:bg-blue-800"
             >
               Select Clinic Date
             </button>
