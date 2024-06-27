@@ -73,8 +73,8 @@ const AddNewRecordModal = ({ isOpen, onOpenChange, datac }) => {
 
                   <Textarea
                     autoFocus
-                    label="Prescription"
-                    placeholder="Enter Prescription"
+                    label="Add Medicines"
+                    placeholder="Add medicines and after adding one, add ',' e.g., Aspirin, Paracetamol, Piriton"
                     onChange={handlePrescriptionChange}
                   />
                 </div>
