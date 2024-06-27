@@ -8,3 +8,21 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
+.videoWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.qrVideo {
+  width: 100%;
+  max-width: 400px;
+}
+
+.scannedText {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 1.2em;
+  font-weight: bold;
+}

@@ -5,7 +5,7 @@ import { Button, Input } from "@nextui-org/react";
 const DashboardAddPatient = () => {
   return (
     <Layout>
-      <div className="flex w-full justify-center items-center h-[700px]">
+      <div className="flex w-full justify-center items-center h-[500px]">
         <PatientsList />
       </div>
     </Layout>

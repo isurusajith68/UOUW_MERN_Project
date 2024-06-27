@@ -17,7 +17,6 @@ import AddPatientModel from "../modal/AddPatientModal";
 import ClickShowMore from "../modal/ClickShowMore";
 import EditPatientModel from "../modal/EditPatientModal";
 import { useEffect, useMemo, useState } from "react";
-import { Patient } from "../data/patients";
 import DeletePatientModel from "../modal/DeletePatientModel";
 
 const PatientsList = () => {
