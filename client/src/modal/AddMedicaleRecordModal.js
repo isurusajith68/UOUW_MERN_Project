@@ -1,15 +1,49 @@
 import {
   Button,
-  Input,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
-  Textarea
+  Textarea,
 } from "@nextui-org/react";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import axios from "axios";
 
-const AddMedicaleRecordModal = ({ isOpen, onOpenChange }) => {
+const AddMedicaleRecordModal = ({ isOpen, onOpenChange, datac }) => {
+  const [medicalRecode, setMedicalRecode] = useState("");
+
+  const handleMedicalRecodeChange = (e) => {
+    setMedicalRecode(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!datac?._id) {
+      return toast.error("Patient ID is required please scan the QR code");
+    }
+
+    if (!medicalRecode) {
+      return toast.error("Medical Record is required");
+    }
+
+    const medical = {
+      patientId: datac?._id,
+      medicalRecode: medicalRecode,
+    };
+
+    const res = await axios.post(
+      "http://localhost:5000/medical-record",
+      medical
+    );
+    console.log(res);
+    if (res.status === 200) {
+      toast.success("Medical Record Added Successfully");
+      onOpenChange();
+    }
+  };
+
   return (
     <Modal
       size="lg"
@@ -28,9 +62,10 @@ const AddMedicaleRecordModal = ({ isOpen, onOpenChange }) => {
             <form>
               <ModalBody>
                 <div className="flex gap-5">
-                <Textarea
+                  <Textarea
                     label="Medical Record"
                     placeholder="Enter Medical Record"
+                    onChange={handleMedicalRecodeChange}
                   />
                 </div>
               </ModalBody>
@@ -38,7 +73,7 @@ const AddMedicaleRecordModal = ({ isOpen, onOpenChange }) => {
                 <Button color="danger" variant="light">
                   Clear
                 </Button>
-                <Button color="primary" type="submit">
+                <Button color="primary" type="submit" onClick={handleSubmit}>
                   Register
                 </Button>
               </ModalFooter>

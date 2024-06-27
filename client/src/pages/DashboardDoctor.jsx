@@ -168,6 +168,7 @@ const DashboardDoctor = () => {
       <AddMedicaleRecordModal
         isOpen={isAddMedicaleRecordOpen}
         onOpenChange={onAddMedicaleRecordChange}
+        datac={datac}
       />
 
       <AddNewRecordModal

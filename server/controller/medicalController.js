@@ -30,11 +30,16 @@ export const createMedical = async (req, res) => {
         }
       );
 
-      res.json(updatedMedical);
+      res.status(200).json({
+        data: updatedMedical,
+        message: "Medical record updated successfully",
+      });
     } else {
       const newMedical = new Medical(medical);
       await newMedical.save();
-      res.json(newMedical);
+      res
+        .status(200)
+        .json({ data: newMedical, message: "Medical record added" });
     }
   } catch (error) {
     res.status(409).json({ message: error.message });

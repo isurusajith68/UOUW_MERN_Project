@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/auth", userRouter);
 app.use("/patients", patientRouter);
-app.use("/medical", medicalRouter);
+app.use("/medical-record", medicalRouter);
 // app.use("/student", studentRouter);
 // app.use("/assessment", assessmentRouter);
 
