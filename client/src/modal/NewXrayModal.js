@@ -6,6 +6,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Textarea
 } from "@nextui-org/react";
 
 const NewXrayModal = ({ isOpen, onOpenChange }) => {
@@ -25,11 +26,9 @@ const NewXrayModal = ({ isOpen, onOpenChange }) => {
             <form>
               <ModalBody>
                 <div className="flex gap-5">
-                  <Input
-                    autoFocus
-                    label="First Name"
-                    placeholder="Enter your first name"
-                    variant="bordered"
+                <Textarea
+                    label="X-Ray"
+                    placeholder="Enter X-Ray"
                   />
                 </div>
               </ModalBody>

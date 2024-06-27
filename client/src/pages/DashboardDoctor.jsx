@@ -131,7 +131,7 @@ const DashboardDoctor = () => {
               onClick={openAddNewRecord}
               className="border px-20 py-2 rounded-lg border-white text-sm bg-blue-600 text-white hover:bg-blue-800"
             >
-              New Recode
+              Add prescription
             </button>
 
             <button
