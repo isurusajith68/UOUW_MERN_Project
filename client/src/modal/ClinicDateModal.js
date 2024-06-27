@@ -80,7 +80,7 @@ const ClinicDateModal = ({ isOpen, onOpenChange, datac }) => {
                   Clear
                 </Button>
                 <Button color="primary" type="submit" onClick={onSubmit}>
-                  Register
+                  Add Clinic Date
                 </Button>
               </ModalFooter>
             </form>

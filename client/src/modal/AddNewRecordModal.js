@@ -73,8 +73,8 @@ const AddNewRecordModal = ({ isOpen, onOpenChange, datac }) => {
 
                   <Textarea
                     autoFocus
-                    label="Address"
-                    placeholder="Enter address"
+                    label="Prescription"
+                    placeholder="Enter Prescription"
                     onChange={handlePrescriptionChange}
                   />
                 </div>
@@ -84,7 +84,7 @@ const AddNewRecordModal = ({ isOpen, onOpenChange, datac }) => {
                   Clear
                 </Button>
                 <Button color="primary" type="submit" onClick={handleSubmit}>
-                  Register
+                  Add Prescrioption
                 </Button>
               </ModalFooter>
             </form>

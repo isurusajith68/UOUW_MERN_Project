@@ -75,7 +75,7 @@ const NewXrayModal = ({ isOpen, onOpenChange, datac }) => {
                   Clear
                 </Button>
                 <Button color="primary" type="submit" onClick={handleSubmit}>
-                  Register
+                  Add X-Ray
                 </Button>
               </ModalFooter>
             </form>

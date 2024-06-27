@@ -76,7 +76,7 @@ const NewBloodReportModal = ({ isOpen, onOpenChange, datac }) => {
                   Clear
                 </Button>
                 <Button color="primary" type="submit" onClick={handleSubmit}>
-                  Register
+                  Add Blood Report
                 </Button>
               </ModalFooter>
             </form>
