@@ -22,6 +22,8 @@ export const createMedical = async (req, res) => {
     const exsitMedical = await Medical.findOne({ patientId });
 
     if (exsitMedical) {
+      medical.medicingDilivery = false;
+
       const updatedMedical = await Medical.findOneAndUpdate(
         exsitMedical._id,
         medical,

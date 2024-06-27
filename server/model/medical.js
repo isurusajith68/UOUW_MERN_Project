@@ -20,6 +20,10 @@ const MedicalSchema = mongoose.Schema({
   clinicalDate: {
     type: String,
   },
+  medicingDilivery: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Medical = mongoose.model("Medical", MedicalSchema);

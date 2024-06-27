@@ -20,9 +20,7 @@ const QrModal = ({ isOpen, onOpenChange, onOpen, patientID, patientsData }) => {
     wrapper.style.padding = "10px";
     wrapper.style.width = `${element.offsetWidth}px`;
     wrapper.style.backgroundColor = "#ffffff";
-    const qrCodeElement = (
-      <QRCode value={patientID} size={128} renderAs="canvas" />
-    );
+
     const clonedElement = element.cloneNode(true);
     wrapper.appendChild(clonedElement);
 
