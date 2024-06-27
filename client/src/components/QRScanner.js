@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import QrScanner from "qr-scanner";
 
-const QRScanner = ({ onScan, onClose }) => {
+const QRScanner = ({ onScan }) => {
   const videoElementRef = useRef(null);
   const [scannedText, setScannedText] = useState("");
 
@@ -22,14 +22,13 @@ const QRScanner = ({ onScan, onClose }) => {
     );
     qrScanner.start();
     console.log("QR Scanner started");
-    
-    
 
     return () => {
       qrScanner.stop();
       qrScanner.destroy();
       console.log("QR Scanner stopped");
     };
+    
   }, [onScan]);
 
   return (

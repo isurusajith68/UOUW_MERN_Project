@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Button,
   Modal,
@@ -8,12 +8,14 @@ import {
   ModalHeader,
   Spinner,
 } from "@nextui-org/react";
-
 import { toast } from "react-hot-toast";
-import QRScanner from "../components/QRScanner";
+import QrScanner from "qr-scanner";
 
 const ScanQrModal = ({ isOpen, onOpenChange, setDatac }) => {
   const [loading, setLoading] = useState(false);
+  const videoElementRef = useRef(null);
+  const [scannedText, setScannedText] = useState("");
+  const qrScannerRef = useRef(null); // Keep a reference to the QR scanner instance
 
   const handleScan = (data) => {
     fetchPatientData(data);
@@ -33,7 +35,7 @@ const ScanQrModal = ({ isOpen, onOpenChange, setDatac }) => {
         const ticket = data.patient;
         setDatac(ticket);
         toast.success("Successfully retrieved patient.");
-        onOpenChange(false);
+        onOpenChange(false); // Close the modal after successful scan
       }
     } catch (error) {
       console.error("Error retrieving patient:", error);
@@ -42,6 +44,42 @@ const ScanQrModal = ({ isOpen, onOpenChange, setDatac }) => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const video = videoElementRef.current;
+
+    if (isOpen && video) {
+      const qrScanner = new QrScanner(
+        video,
+        (result) => {
+          console.log("decoded qr code:", result);
+          setScannedText(result.data);
+          handleScan(result.data);
+        },
+        {
+          returnDetailedScanResult: true,
+          highlightScanRegion: true,
+          highlightCodeOutline: true,
+        }
+      );
+      qrScannerRef.current = qrScanner;
+      qrScanner.start();
+      console.log("QR Scanner started");
+    }
+
+    return () => {
+      if (qrScannerRef.current) {
+        qrScannerRef.current.stop();
+        qrScannerRef.current.destroy();
+        console.log("QR Scanner stopped and destroyed");
+      }
+      if (video && video.srcObject) {
+        const tracks = video.srcObject.getTracks();
+        tracks.forEach((track) => track.stop());
+        video.srcObject = null;
+      }
+    };
+  }, [isOpen]); // Re-run the effect when `isOpen` changes
 
   return (
     <Modal
@@ -60,9 +98,16 @@ const ScanQrModal = ({ isOpen, onOpenChange, setDatac }) => {
             </ModalHeader>
             <ModalBody>
               {loading ? (
-                <Spinner type="spinner" size="lg" />
+                <Spinner />
               ) : (
-                <QRScanner onScan={handleScan} />
+                isOpen && (
+                  <div>
+                    <div className="videoWrapper">
+                      <video className="qrVideo" ref={videoElementRef} />
+                    </div>
+                    {/* <p className="scannedText">SCANNED: {scannedText}</p> */}
+                  </div>
+                )
               )}
             </ModalBody>
             <ModalFooter>
