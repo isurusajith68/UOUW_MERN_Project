@@ -50,7 +50,7 @@ export const createPatient = async (req, res) => {
       address,
     });
 
-    console.log(req.body);
+    sendUsernamePassword(firstName, lastName, phoneNumber)
     res.status(201).json({ patient });
   } catch (error) {
     res.status(500).json({ message: error.message });

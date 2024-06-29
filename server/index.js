@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import userRouter from "./router/userRouter.js";
 import patientRouter from "./router/patientRouter.js";
 import medicalRouter from "./router/medicalRouter.js";
+import { sendUsernamePassword } from "./utils/SendSMS.js";
 
 // import staffRouter from "./routers/staffRouter.js";
 // import studentRouter from "./routers/studentRouter.js";
@@ -26,6 +27,11 @@ app.use("/medical-record", medicalRouter);
 // app.use("/assessment", assessmentRouter);
 
 connectMongoDB();
+console.log(process.env.USER_ID)
+// sendUsernamePassword("isuru", "sajith", "0765280144")
 
 app.get("/", (req, res) => res.send("Hello World!"));
 app.listen(port, () => console.log(`app listening on port ${port}!`));
+
+
+
