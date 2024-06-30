@@ -13,6 +13,8 @@ import DashboardDoctor from "./pages/DashboardDoctor";
 import DashboardParmacy from "./pages/DashboardParmacy";
 import Login from "./pages/Login";
 import { Toaster } from "react-hot-toast";
+import PatientPage from "./pages/Patient";
+
 
 function App() {
   return (
@@ -26,6 +28,7 @@ function App() {
         <Route path="/course" element={<Courses />} />
         <Route path="/staff" element={<OurStaff />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard/patient" element={<PatientPage />} />
         <Route
           path="/dashboard/add-patient"
           element={<DashboardAddPatient />}

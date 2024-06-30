@@ -27,7 +27,7 @@ app.use("/medical-record", medicalRouter);
 // app.use("/assessment", assessmentRouter);
 
 connectMongoDB();
-console.log(process.env.USER_ID)
+
 // sendUsernamePassword("isuru", "sajith", "0765280144")
 
 app.get("/", (req, res) => res.send("Hello World!"));

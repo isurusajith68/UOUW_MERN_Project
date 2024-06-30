@@ -36,11 +36,12 @@ const Login = () => {
       if (res.status === 200) {
         toast.success("Login successfully");
         localStorage.setItem("authUser", JSON.stringify(res.data.user));
-       console.log(res.data.user.role) 
+        console.log(res.data.user.role);
         if (res.data.user.role === "admin") {
           navigate("/dashboard");
+        } else if (res.data.user.role === "patient") {
+          navigate("/dashboard/patient");
         }
-
       }
     } catch (error) {
       if (error?.response) {
