@@ -69,6 +69,20 @@ const SideBar = () => {
           </Link>
           {/* )} */}
 
+          {/* {user?.role === "patient" && ( */}
+          <Link
+            to="/dashboard/patient"
+            className={
+              pathname === "/dashboard/patient"
+                ? "p-2 flex gap-2 text-blue-600 hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
+                : "p-2 flex gap-2  hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
+            }
+          >
+            <FaUserPen size={20} />
+            <span className="ml-2">Patient</span>
+          </Link>
+          {/* )} */}
+
           {/* {user?.role === "doctor" && ( */}
           <Link
             to="/dashboard/doctor"
@@ -97,7 +111,7 @@ const SideBar = () => {
             <span className="ml-2">Pharmacist</span>
           </Link>
           {/* )} */}
-          
+
           {/* {user?.role === "laboratory" && ( */}
           <Link
             to="/dashboard/laboratory"

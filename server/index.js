@@ -27,8 +27,8 @@ app.use("/medical-record", medicalRouter);
 // app.use("/assessment", assessmentRouter);
 
 connectMongoDB();
-console.log(process.env.USER_ID)
-// sendUsernamePassword("Dinidu", "Madushan", "0705361547")
+
+// sendUsernamePassword("isuru", "sajith", "0765280144")
 
 app.get("/", (req, res) => res.send("Hello World!"));
 app.listen(port, () => console.log(`app listening on port ${port}!`));

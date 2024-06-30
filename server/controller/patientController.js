@@ -1,4 +1,5 @@
 import Patients from "../model/Patients.js";
+import { sendUsernamePassword } from "../utils/SendSMS.js";
 
 export const getPatients = async (req, res) => {
   try {
@@ -50,7 +51,8 @@ export const createPatient = async (req, res) => {
       address,
     });
 
-    sendUsernamePassword(firstName, lastName, phoneNumber)
+    sendUsernamePassword(firstName, lastName, phoneNumber,email);
+
     res.status(201).json({ patient });
   } catch (error) {
     res.status(500).json({ message: error.message });
