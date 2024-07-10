@@ -27,16 +27,21 @@ const DashboardPharmacy = () => {
     onOpen: openPrintModal,
     onOpenChange: onPrintModalChange,
   } = useDisclosure();
+
   useEffect(() => {
     if (datac) {
       fetchPrescriptionData(datac._id);
     }
   }, [datac]);
 
+  // useEffect(() => {
+  //   fetchPrescriptionData();
+  // }, []);
   const fetchPrescriptionData = async (id) => {
     try {
       const response = await axios.get(
         `http://localhost:5000/medical-record/${id}`
+        // `http://localhost:5000/medical-record/668d8970590b23eda33bd3f9`
       );
 
       const prescriptionData = response.data[0]?.prescription

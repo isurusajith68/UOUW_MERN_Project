@@ -128,9 +128,9 @@ const SideBar = () => {
           {/* )} */}
           {/* {user?.role === "rediologist" && ( */}
           <Link
-            to="/dashboard/add-staff"
+            to="/dashboard/x-ray"
             className={
-              pathname === "/dashboard/add-staff"
+              pathname === "/dashboard/x-ray"
                 ? "p-2 flex gap-2 text-blue-600 hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
                 : "p-2 flex gap-2  hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
             }

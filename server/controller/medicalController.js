@@ -1,4 +1,6 @@
 import Medical from "../model/medical.js";
+import Xray from "../model/xray.js";
+import { xRayDeliveredSms } from "../utils/SendSMS.js";
 
 export const getMedicals = async (req, res) => {
   try {
@@ -58,6 +60,76 @@ export const getMedicalsByPatientId = async (req, res) => {
     }
 
     res.json(medicals);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+export const createMedicalXray = async (req, res) => {
+  const { patientId, xray, xrayIssued, delivered } = req.body;
+
+  if (!patientId) {
+    return res.status(400).json({ message: "Patient ID is required" });
+  }
+
+  if (!xray) {
+    return res.status(400).json({ message: "Xray is required" });
+  }
+
+  if (!xrayIssued) {
+    return res.status(400).json({ message: "XrayIssued is required" });
+  }
+  try {
+    const existMedical = await Xray.findOne({ patientId });
+
+    const addMedicalRecord = await Xray.create({
+      patientId,
+      xray,
+      xrayIssued,
+    });
+    res.json(addMedicalRecord);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const getMedicalXray = async (req, res) => {
+  const { patientid } = req.params;
+  console.log(patientid);
+  try {
+    const xrayData = await Xray.find({ patientId: patientid });
+
+    if (!xrayData) {
+      return res.status(404).json({ message: "Xray not found" });
+    }
+
+    res.json(xrayData);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+export const updateMedicalXray = async (req, res) => {
+  const { id } = req.params;
+  const { firstName, lastName, phoneNumber } = req.body;
+  console.log(id, firstName, lastName, phoneNumber);
+  try {
+    const xrayData = await Xray.findOne({ _id: id });
+
+    if (!xrayData) {
+      return res.status(404).json({ message: "Xray not found" });
+    }
+
+    const updatedXray = await Xray.findOneAndUpdate(
+      xrayData._id,
+      { delivered: true },
+      {
+        new: true,
+      }
+    );
+    xRayDeliveredSms(firstName, lastName, phoneNumber);
+    res.json(updatedXray);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }

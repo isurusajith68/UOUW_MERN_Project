@@ -44,6 +44,29 @@ export const sendUsernamePassword = async (
   }
 };
 
+export const xRayDeliveredSms = async (firstName, lastName, phoneNumber) => {
+  const message = `Dear ${firstName} ${lastName}, Your Xray has been delivered. Please collect it from the hospital.`;
+
+  const phone = validPhoneNumber(phoneNumber);
+
+  const url = `https://app.notify.lk/api/v1/send`;
+
+  const params = {
+    user_id: process.env.USER_ID,
+    api_key: process.env.NOTFY_API_KEY,
+    sender_id: process.env.SENDER_ID,
+    to: phone,
+    message: message,
+  };
+
+  try {
+    const res = await axios.post(url, null, { params });
+    console.log(res.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const validPhoneNumber = (phoneNumber) => {
   if (phoneNumber.startsWith("0")) {
     return phoneNumber.replace("0", "94");
@@ -57,5 +80,6 @@ const generatePassword = () => {
 };
 
 const generateUsername = (firstName, lastName) => {
-   return `${firstName}${lastName}`.toLowerCase();
+  return `${firstName}${lastName}`.toLowerCase();
 };
+

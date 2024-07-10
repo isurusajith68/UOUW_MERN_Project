@@ -6,7 +6,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  Textarea
+  Textarea,
 } from "@nextui-org/react";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -29,13 +29,16 @@ const NewXrayModal = ({ isOpen, onOpenChange, datac }) => {
       return toast.error("X-Ray is required");
     }
 
+    //this one want get logged doctor name
+    const xrayIssued = "Dr Isuru";
     const medical = {
       patientId: datac?._id,
       xray: xray,
+      xrayIssued,
     };
 
     const res = await axios.post(
-      "http://localhost:5000/medical-record",
+      "http://localhost:5000/medical-record/xray",
       medical
     );
     console.log(res);
@@ -44,7 +47,6 @@ const NewXrayModal = ({ isOpen, onOpenChange, datac }) => {
       onOpenChange();
     }
   };
-
 
   return (
     <Modal
@@ -62,7 +64,7 @@ const NewXrayModal = ({ isOpen, onOpenChange, datac }) => {
             <form>
               <ModalBody>
                 <div className="flex gap-5">
-                <Textarea
+                  <Textarea
                     autoFocus
                     label="X-Ray"
                     placeholder="Enter X-Ray"

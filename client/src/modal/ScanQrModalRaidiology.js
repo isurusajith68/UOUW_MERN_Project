@@ -1,4 +1,3 @@
-import React, { useState, useEffect, useRef } from "react";
 import {
   Button,
   Modal,
@@ -8,19 +7,19 @@ import {
   ModalHeader,
   Spinner,
 } from "@nextui-org/react";
-import { toast } from "react-hot-toast";
 import QrScanner from "qr-scanner";
+import { useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 
-const ScanQrModalParamarcy = ({ isOpen, onOpenChange, setData }) => {
+const ScanQrModalRaidiology = ({ isOpen, onOpenChange, setData }) => {
   const [loading, setLoading] = useState(false);
   const videoElementRef = useRef(null);
-  const [scanData, setScannedText] = useState("");
+  const [scannedText, setScannedText] = useState("");
   const qrScannerRef = useRef(null);
 
   const handleScan = (data) => {
     fetchPatientData(data);
   };
-
   useEffect(() => {
     fetchPatientData();
   }, []);
@@ -43,7 +42,7 @@ const ScanQrModalParamarcy = ({ isOpen, onOpenChange, setData }) => {
         const patient = data.patient;
         setData(patient);
         toast.success("Successfully retrieved patient.");
-        onOpenChange(false); // Close the modal after successful scan
+        onOpenChange(false);
       }
     } catch (error) {
       console.error("Error retrieving patient:", error);
@@ -130,4 +129,4 @@ const ScanQrModalParamarcy = ({ isOpen, onOpenChange, setData }) => {
   );
 };
 
-export default ScanQrModalParamarcy;
+export default ScanQrModalRaidiology;

@@ -6,19 +6,22 @@ const MedicalSchema = mongoose.Schema({
     required: true,
   },
   medicalRecode: {
-    type: String,
+    type: Array,
   },
   prescription: {
     type: String,
   },
   xray: {
-    type: String,
+    type: Array,
+  },
+  xrayIssued: {
+    type: Array,
   },
   bloodReport: {
-    type: String,
+    type: Array,
   },
   clinicalDate: {
-    type: String,
+    type: Array,
   },
   medicingDilivery: {
     type: Boolean,
