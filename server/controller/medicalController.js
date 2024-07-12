@@ -1,3 +1,4 @@
+import Lab from "../model/laboratary.js";
 import Medical from "../model/medical.js";
 import Xray from "../model/xray.js";
 import { xRayDeliveredSms } from "../utils/SendSMS.js";
@@ -130,6 +131,76 @@ export const updateMedicalXray = async (req, res) => {
     );
     xRayDeliveredSms(firstName, lastName, phoneNumber);
     res.json(updatedXray);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+export const createLabReport = async (req, res) => {
+  const { patientId, report, reportIssued, delivered } = req.body;
+
+  if (!patientId) {
+    return res.status(400).json({ message: "Patient ID is required" });
+  }
+
+  if (!report) {
+    return res.status(400).json({ message: "report is required" });
+  }
+
+  if (!reportIssued) {
+    return res.status(400).json({ message: "reportIssued is required" });
+  }
+  try {
+    const existMedical = await Lab.findOne({ patientId });
+
+    const addMedicalReport = await Lab.create({
+      patientId,
+      report,
+      reportIssued,
+    });
+    res.json(addMedicalReport);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const getLabReport = async (req, res) => {
+  const { patientid } = req.params;
+  console.log(patientid);
+  try {
+    const labData = await Lab.find({ patientId: patientid });
+
+    if (!labData) {
+      return res.status(404).json({ message: "Lab report not found" });
+    }
+
+    res.json(labData);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+export const updateLabReport = async (req, res) => {
+  const { id } = req.params;
+  const { firstName, lastName, phoneNumber, pdfUrl } = req.body;
+  console.log(id, firstName, lastName, phoneNumber, pdfUrl);
+  try {
+    const labData = await Lab.findOne({ _id: id });
+
+    if (!labData) {
+      return res.status(404).json({ message: "Lab report not found" });
+    }
+
+    const updatedLab = await Lab.findOneAndUpdate(
+      labData._id,
+      { delivered: true, pdfUrl },
+
+      {
+        new: true,
+      }
+    );
+    res.json(updatedLab);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }

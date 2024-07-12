@@ -11,7 +11,10 @@ import { CiCircleCheck } from "react-icons/ci";
 import html2canvas from "html2canvas";
 import React from "react";
 import QRCode from "qrcode.react";
-
+import { appF } from "../db/firebase";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import axios from "axios";
+const storage = getStorage(appF);
 const QrModal = ({ isOpen, onOpenChange, onOpen, patientID, patientsData }) => {
   const downloadImage = () => {
     const element = document.getElementById("qr-data");
@@ -42,6 +45,33 @@ const QrModal = ({ isOpen, onOpenChange, onOpen, patientID, patientsData }) => {
     link.href = url;
     link.download = "qrcode.png";
     link.click();
+  };
+
+  const handleSendEmail = async () => {
+    const canvas = document.getElementById("qrcode");
+    canvas.toBlob(async (blob) => {
+      const formData = new FormData();
+      formData.append("attachment", blob, "qrcode.png");
+      formData.append("to", `${patientsData.email}`); 
+      formData.append("subject", "QR Code");
+      formData.append("text", "Here is your QR code.");
+
+      try {
+        const response = await axios.post(
+          "http://localhost:5000/send-email",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        alert("Email sent successfully!");
+      } catch (error) {
+        console.error("Error sending email:", error);
+        alert("Failed to send email. Please try again.");
+      }
+    });
   };
   return (
     <Modal
@@ -120,11 +150,16 @@ const QrModal = ({ isOpen, onOpenChange, onOpen, patientID, patientsData }) => {
                 color="success"
                 variant="solid"
                 disabled={!patientID}
-                onPress={onClose}
+                // onPress={onClose}
               >
                 Download
               </Button>
-              <Button color="primary" variant="solid">
+              <Button
+                color="primary"
+                variant="solid"
+                onClick={patientID ? handleSendEmail : null}
+                disabled={!patientID}
+              >
                 Send
               </Button>
             </ModalFooter>

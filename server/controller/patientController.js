@@ -115,3 +115,4 @@ export const deletePatient = async (req, res) => {
   }
 };
 
+export const sendEmail = async (req, res) => {};

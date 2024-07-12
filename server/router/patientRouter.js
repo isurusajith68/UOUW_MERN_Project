@@ -4,6 +4,7 @@ import {
   deletePatient,
   getPatientById,
   getPatients,
+  sendEmail,
   updatePatient,
 } from "../controller/patientController.js";
 
@@ -14,5 +15,6 @@ patientRouter.get("/:id", getPatientById);
 patientRouter.post("/", createPatient);
 patientRouter.put("/:id", updatePatient);
 patientRouter.delete("/:id", deletePatient);
+patientRouter.post("/send-email", sendEmail);
 
 export default patientRouter;

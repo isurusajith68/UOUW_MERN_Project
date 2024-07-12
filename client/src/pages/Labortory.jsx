@@ -1,5 +1,6 @@
 import {
   Button,
+  Input,
   Pagination,
   Table,
   TableBody,
@@ -14,20 +15,30 @@ import ScanQrModalParamarcy from "../components/ScanQrModalParamarcy";
 import ScanQrModalRaidiology from "../modal/ScanQrModalRaidiology";
 import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
-
-const Radiology = () => {
+import ScanQrModalLaboratary from "../modal/ScanQrModalLaboratary";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { appF } from "../db/firebase";
+import axios from "axios";
+const storage = getStorage(appF);
+const Laboratory = () => {
   const [page, setPage] = useState(1);
   const [datac, setData] = useState(null);
-  const [x, setX] = useState([]);
+  const [lab, setLab] = useState([]);
   const [refetch, setRefetch] = useState(false);
   const rowsPerPage = 6;
-  const pages = Math.ceil(x.length / rowsPerPage);
+  const pages = Math.ceil(lab.length / rowsPerPage);
+  const [file, setFile] = useState(null);
+
+  const fileChange = (e) => {
+    const file = e.target.files[0];
+    setFile(file);
+  };
 
   const items = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
-    return x.slice(start, end);
-  }, [page, x]);
+    return lab.slice(start, end);
+  }, [page, lab]);
 
   const {
     isOpen: isModalOpen,
@@ -36,64 +47,91 @@ const Radiology = () => {
   } = useDisclosure();
   // console.log(x[x.length - 1].xray);
   useEffect(() => {
-    const fetchXrayData = async () => {
+    const fetchReport = async () => {
       try {
         // const response = await fetch(`http://localhost:5000/patients/${id}`, {
         const response = await fetch(
-          `http://localhost:5000/medical-record/xray/${datac?._id}`,
+          `http://localhost:5000/medical-record/lab/${datac?._id}`,
           {
             headers: { "Content-Type": "application/json" },
           }
         );
 
         if (response.status === 404) {
-          toast.error("Xray not found.");
+          toast.error("report not found.");
         } else if (response.status === 200) {
           const data = await response.json();
-          const xray = data;
+          const report = data;
 
-          setX(xray);
-          toast.success("Successfully retrieved Xray.");
+          setLab(report);
+          toast.success("Successfully retrieved report.");
         }
       } catch (error) {
-        console.error("Error retrieving Xray:", error);
-        toast.error("Failed to retrieve Xray.");
+        console.error("Error retrieving report:", error);
+        toast.error("Failed to retrieve report.");
       } finally {
       }
     };
-    fetchXrayData();
+    fetchReport();
   }, [datac, refetch]);
 
-  const deliverdXray = async () => {
-    console.log(datac);
-    try {
-      const response = await fetch(
-        `http://localhost:5000/medical-record/xray/delivered/${
-          x[x.length - 1]?._id
-        }`,
+  //   const deliverdReport = async () => {
+  //     console.log(datac);
+  //     try {
+  //       const response = await fetch(
+  //         `http://localhost:5000/medical-record/xray/delivered/${
+  //           lab[lab.length - 1]?._id
+  //         }`,
 
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            firstName: datac.firstName,
-            lastName: datac.lastName,
-            phoneNumber: datac.phoneNumber,
-          }),
-        }
+  //         {
+  //           method: "PUT",
+  //           headers: { "Content-Type": "application/json" },
+  //           body: JSON.stringify({
+  //             firstName: datac.firstName,
+  //             lastName: datac.lastName,
+  //             phoneNumber: datac.phoneNumber,
+  //           }),
+  //         }
+  //       );
+  //       if (response.status === 200) {
+  //         toast.success("Lab Report delivered successfully.");
+  //         setRefetch(!refetch);
+  //       } else {
+  //         toast.error("Failed to deliver Lab Report.");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error delivering Lab Report:", error);
+  //       toast.error("Failed to deliver Lab Report.");
+  //     }
+  //   };
+  const onSubmit = async (data) => {
+    const storageRef = ref(storage, `doc/${file.name}`);
+    await uploadBytes(storageRef, file);
+
+    const url = await getDownloadURL(storageRef);
+
+    const postData = {
+      firstName: datac.firstName,
+      lastName: datac.lastName,
+      phoneNumber: datac.phoneNumber,
+      pdfUrl: url,
+    };
+
+    try {
+      await axios.put(
+        `http://localhost:5000/medical-record/lab/delivered/${
+          lab[lab.length - 1]?._id
+        }`,
+        postData
       );
-      if (response.status === 200) {
-        toast.success("Xray delivered successfully.");
-        setRefetch(!refetch);
-      } else {
-        toast.error("Failed to deliver Xray.");
-      }
+      toast.success("Report Added Successfully");
     } catch (error) {
-      console.error("Error delivering Xray:", error);
-      toast.error("Failed to deliver Xray.");
+      if (error.response.status === 400) {
+        return toast.error(error.response.data.message);
+      }
+      toast.error("An error occurred. Please try again.");
     }
   };
-
   return (
     <Layout>
       <div className="flex px-10">
@@ -151,14 +189,14 @@ const Radiology = () => {
           </div>
         </div>
         <div className="flex-1 px-5">
-          {x ? (
+          {lab ? (
             <h1 className="text-xl font-semibold text-center mt-1">
-              X Ray Details
+              Lab Report Details
             </h1>
           ) : (
             <div className="border rounded-lg h-60">
               <h1 className="text-2xl font-semibold text-center mt-5">
-                X Ray Details
+                Lab Report Details
               </h1>
               <h1 className="text-red-500 text-sm mt-10 text-center">
                 Not available
@@ -167,7 +205,7 @@ const Radiology = () => {
           )}
           <div className="flex mt-2 items-center justify-center">
             {
-              x && (
+              lab && (
                 // x?.map((data) => (
                 <div className="flex w-[520px] gap-10 p-4 rounded-lg border items-center">
                   <div className="flex flex-col gap-2 ml-10">
@@ -177,21 +215,29 @@ const Radiology = () => {
                   </div>
                   <div className="flex flex-col gap-2">
                     <div className="text-blue-500">
-                      {x[x.length - 1]?.xrayIssued}
+                      {lab[lab.length - 1]?.reportIssued}
                     </div>
                     <div className="text-blue-500">
-                      {new Date(x[x.length - 1]?.date).toLocaleDateString()}
+                      {new Date(lab[lab.length - 1]?.date).toLocaleDateString()}
                     </div>
-                    <div className="text-blue-500">{x[x.length - 1]?.xray}</div>
+                    <div className="text-blue-500">
+                      {lab[lab.length - 1]?.report}
+                    </div>
                   </div>
                 </div>
               )
               // ))
             }
           </div>
-          <div className="w-full flex justify-center mt-10">
-            <Button onClick={() => deliverdXray()} color="danger">
-              Delivered Xray
+          <div className="w-full flex justify-center mt-10 flex-col">
+            <input
+              type="file"
+              placeholder="Enter Lab Report"
+              onChange={fileChange}
+              className="p-2 border-2 border-gray-300 rounded-lg cursor-pointer"
+            />
+            <Button onClick={() => onSubmit()} color="danger">
+              Upload
             </Button>
           </div>
         </div>
@@ -225,11 +271,11 @@ const Radiology = () => {
               {items.map((item, index) => (
                 <TableRow key={item.id}>
                   <TableCell>{index + 1}</TableCell>
-                  <TableCell>{item.xrayIssued}</TableCell>
+                  <TableCell>{item.reportIssued}</TableCell>
                   <TableCell>
                     {new Date(item.date).toLocaleDateString()}
                   </TableCell>
-                  <TableCell>{item.xray}</TableCell>
+                  <TableCell>{item.report}</TableCell>
                   <TableCell>
                     {item.delivered ? "Delivered" : "Not Delivered"}
                   </TableCell>
@@ -240,7 +286,7 @@ const Radiology = () => {
         </div>
       </div>
 
-      <ScanQrModalRaidiology
+      <ScanQrModalLaboratary
         setData={setData}
         isOpen={isModalOpen}
         onOpenChange={onModalChange}
@@ -254,4 +300,4 @@ const Radiology = () => {
     </Layout>
   );
 };
-export default Radiology;
+export default Laboratory;
