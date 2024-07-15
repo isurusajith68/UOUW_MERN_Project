@@ -11,6 +11,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 
+
 const AddMedicaleRecordModal = ({ isOpen, onOpenChange, datac }) => {
   const [medicalRecode, setMedicalRecode] = useState("");
 
@@ -40,9 +41,27 @@ const AddMedicaleRecordModal = ({ isOpen, onOpenChange, datac }) => {
     console.log(res);
     if (res.status === 200) {
       toast.success("Medical Record Added Successfully");
+      removeQueue(datac._id);
       onOpenChange();
     }
   };
+
+   const removeQueue = async (id) => {
+     try {
+       const response = await axios.put(
+         `http://localhost:5000/medical-record/rm/queue/${id}`
+       );
+
+       if (response.status === 200) {
+         toast.success(response.data.message);
+         console.log(response.data.queue);
+       }
+     } catch (error) {
+       console.error("Error adding patient to queue:", error);
+       toast.error("Failed to add patient to queue.");
+     }
+   };
+
 
   return (
     <Modal

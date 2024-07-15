@@ -17,6 +17,7 @@ import PatientPage from "./pages/Patient";
 import Raidiology from "./pages/Raidiology";
 import Laboratory from "./pages/Labortory";
 import Radiology from "./pages/Raidiology";
+import Attendant from "./pages/Attendant";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
         <Route path="/dashboard/pharmacy" element={<DashboardParmacy />} />
         <Route path="/dashboard/x-ray" element={<Radiology />} />
         <Route path="/dashboard/laboratory" element={<Laboratory />} />
+        <Route path="/dashboard/attendant" element={<Attendant />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

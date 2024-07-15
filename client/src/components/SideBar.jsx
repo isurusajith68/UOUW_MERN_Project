@@ -69,6 +69,20 @@ const SideBar = () => {
           </Link>
           {/* )} */}
 
+          {/* {user?.role === "attendant" && ( */}
+          <Link
+            to="/dashboard/attendant"
+            className={
+              pathname === "/dashboard/attendant"
+                ? "p-2 flex gap-2 text-blue-600 hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
+                : "p-2 flex gap-2  hover:bg-white hover:rounded-lg border border-white shadow-sm bg-white rounded-lg cursor-pointer"
+            }
+          >
+            <FaUserPen size={20} />
+            <span className="ml-2">Attendant</span>
+          </Link>
+          {/* )} */}
+
           {/* {user?.role === "patient" && ( */}
           <Link
             to="/dashboard/patient"

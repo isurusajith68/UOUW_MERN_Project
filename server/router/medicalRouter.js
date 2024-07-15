@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  addQueue,
   createLabReport,
   createMedical,
   createMedicalXray,
@@ -7,9 +8,12 @@ import {
   getMedicals,
   getMedicalsByPatientId,
   getMedicalXray,
+  getQueue,
+  removeQueue,
   updateLabReport,
   updateMedicalXray,
 } from "../controller/medicalController.js";
+
 
 const medicalRouter = express.Router();
 
@@ -22,5 +26,8 @@ medicalRouter.put("/xray/delivered/:id", updateMedicalXray);
 medicalRouter.post("/lab", createLabReport);
 medicalRouter.get("/lab/:patientid", getLabReport);
 medicalRouter.put("/lab/delivered/:id", updateLabReport);
+medicalRouter.put("/queue/:id", addQueue);
+medicalRouter.put("/rm/queue/:id", removeQueue);
+medicalRouter.get("/queue/get", getQueue);
 
 export default medicalRouter;

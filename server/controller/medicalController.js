@@ -1,5 +1,6 @@
 import Lab from "../model/laboratary.js";
 import Medical from "../model/medical.js";
+import Queue from "../model/queue.js";
 import Xray from "../model/xray.js";
 import { xRayDeliveredSms } from "../utils/SendSMS.js";
 
@@ -201,6 +202,79 @@ export const updateLabReport = async (req, res) => {
       }
     );
     res.json(updatedLab);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+export const addQueue = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    let queue = await Queue.findOne();
+
+    if (queue) {
+      if (queue.queue.includes(id)) {
+        // queue.queue.pull(id);
+        // await queue.save();
+        res.json({
+          message: "Patient all ready in queue",
+          queue,
+        });
+      } else {
+        queue.queue.push(id);
+        await queue.save();
+        res.json({
+          message: "Patient added to queue",
+          queue,
+        });
+      }
+    } else {
+      queue = new Queue({ queue: [id] });
+      await queue.save();
+      res.json(queue);
+    }
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+export const removeQueue = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    let queue = await Queue.findOne();
+
+    if (queue) {
+      if (queue.queue.includes(id)) {
+        queue.queue.pull(id);
+        await queue.save();
+        res.json({
+          message: "Patient removed from queue",
+          queue,
+        });
+      } else {
+        // queue.queue.push(id);
+        // await queue.save();
+        res.json({
+          message: "Patient removed from queue",
+          queue,
+        });
+      }
+    } else {
+      queue = new Queue({ queue: [id] });
+      await queue.save();
+      res.json(queue);
+    }
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+export const getQueue = async (req, res) => {
+  try {
+    const queue = await Queue.find();
+    res.json(queue);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
