@@ -51,7 +51,7 @@ export const createPatient = async (req, res) => {
       address,
     });
 
-    sendUsernamePassword(firstName, lastName, phoneNumber,email);
+    sendUsernamePassword(firstName, lastName, phoneNumber, email);
 
     res.status(201).json({ patient });
   } catch (error) {

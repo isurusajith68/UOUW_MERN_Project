@@ -28,12 +28,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/auth", userRouter);
 app.use("/patients", patientRouter);
 app.use("/medical-record", medicalRouter);
-// app.use("/student", studentRouter);
-// app.use("/assessment", assessmentRouter);
 
 connectMongoDB();
-
-// sendUsernamePassword("isuru", "sajith", "0765280144")
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
