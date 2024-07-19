@@ -56,7 +56,7 @@ const EditPatientModel = ({
   const onSubmit = async (data) => {
     try {
       const res = await axios.put(
-        `http://localhost:5000/patients/${selectedPatient._id}`,
+        `http://localhost:5000/auth/${selectedPatient._id}`,
         data
       );
       setRefetch((prev) => !prev);

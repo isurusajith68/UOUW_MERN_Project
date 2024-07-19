@@ -7,7 +7,7 @@ import {
   ModalHeader,
 } from "@nextui-org/react";
 
-const ClickShowMore = ({ isOpen, onOpenChange, patient }) => {
+const ClickShowMoreDoctor = ({ isOpen, onOpenChange, doctor }) => {
   return (
     <Modal
       isOpen={isOpen}
@@ -19,7 +19,7 @@ const ClickShowMore = ({ isOpen, onOpenChange, patient }) => {
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col gap-1">
-              Patient Information
+              Doctor Information
             </ModalHeader>
             <ModalBody>
               <div className="flex  gap-5">
@@ -29,6 +29,9 @@ const ClickShowMore = ({ isOpen, onOpenChange, patient }) => {
                   </div>
                   <div className="flex flex-col gap-1">
                     <span className="text-gray-900">ID Number</span>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <span className="text-gray-900">SLMC Number</span>
                   </div>
                   <div className="flex flex-col gap-1">
                     <span className="text-gray-900">Date of Birth</span>
@@ -43,39 +46,41 @@ const ClickShowMore = ({ isOpen, onOpenChange, patient }) => {
                     <span className="text-gray-900">Address</span>
                   </div>
                   <div className="flex flex-col gap-1">
-                    <span className="text-gray-900">Blood group</span>
+                    <span className="text-gray-900">Role</span>
                   </div>
                 </div>
                 <div className="flex flex-col gap-2">
                   <div className="flex  gap-1">
                     <span className="text-gray-500">:</span>
-                    <span className="text-gray-500">
-                      {patient.firstName + " " + patient.lastName}
-                    </span>
+                    <span className="text-gray-500">{doctor.username}</span>
                   </div>
                   <div className="flex  gap-1">
                     <span className="text-gray-500">:</span>
-                    <span className="text-gray-500">{patient.idNumber}</span>
+                    <span className="text-gray-500">{doctor.idNumber}</span>
                   </div>
                   <div className="flex  gap-1">
                     <span className="text-gray-500">:</span>
-                    <span className="text-gray-500">{patient.dob}</span>
+                    <span className="text-gray-500">{doctor.slmcNumber}</span>
                   </div>
                   <div className="flex  gap-1">
                     <span className="text-gray-500">:</span>
-                    <span className="text-gray-500">{patient.phoneNumber}</span>
+                    <span className="text-gray-500">{doctor.dob}</span>
                   </div>
                   <div className="flex  gap-1">
                     <span className="text-gray-500">:</span>
-                    <span className="text-gray-500">{patient.email}</span>
+                    <span className="text-gray-500">{doctor.phoneNumber}</span>
                   </div>
                   <div className="flex  gap-1">
                     <span className="text-gray-500">:</span>
-                    <span className="text-gray-500">{patient.address}</span>
+                    <span className="text-gray-500">{doctor.email}</span>
                   </div>
                   <div className="flex  gap-1">
                     <span className="text-gray-500">:</span>
-                    <span className="text-gray-500">{patient.bloodGroup}</span>
+                    <span className="text-gray-500">{doctor.address}</span>
+                  </div>
+                  <div className="flex  gap-1">
+                    <span className="text-gray-500">:</span>
+                    <span className="text-gray-500">{doctor.role}</span>
                   </div>
                 </div>
               </div>
@@ -91,4 +96,4 @@ const ClickShowMore = ({ isOpen, onOpenChange, patient }) => {
     </Modal>
   );
 };
-export default ClickShowMore;
+export default ClickShowMoreDoctor;

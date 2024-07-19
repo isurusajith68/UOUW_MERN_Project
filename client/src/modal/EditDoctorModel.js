@@ -16,8 +16,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { roles } from "../data/bloodGroups";
 import axios from "axios";
-import toast from "react-hot-toast";
-import { useGlobalRefetch } from "../store/store";
 
 const schema = yup.object().shape({
   username: yup.string().required("Username is required"),
@@ -31,17 +29,23 @@ const schema = yup.object().shape({
     .required("Phone number is required")
     .min(10, "Phone number must be at least 10 digits")
     .max(12, "Phone number must be at most 12 digits"),
-  role: yup.string().required("Role is required"),
   address: yup.string().required("Address is required"),
   email: yup.string().email("Email is not valid").required("Email is required"),
   dob: yup.date().required("Date of birth is required"),
 });
 
-const AddStaffModel = ({ isOpen, onOpenChange }) => {
+const EditDoctorModel = ({
+  isOpen,
+  onOpenChange,
+  selectedDoctor,
+  setSelectedDoctor,
+  setRefetch,
+  refetch,
+}) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, disabled },
     reset,
     setValue,
     watch,
@@ -49,51 +53,37 @@ const AddStaffModel = ({ isOpen, onOpenChange }) => {
     resolver: yupResolver(schema),
   });
 
-  const { setGlobalRefetch } = useGlobalRefetch();
-
   const onSubmit = async (data) => {
     try {
-      const res = await axios.post("http://localhost:5000/auth/staff", data);
-
-      console.log("Response:", res); // Log the response to check its status and data
-
-      if (res.status === 201) {
-        toast.success("Staff added successfully");
-        setGlobalRefetch(true);
-        toast.success("A password has been sent to your phone number.");
-      } else if (res.status === 400) {
-        toast.error("Staff already exists");
-      } else {
-        toast.error("An unexpected status code was returned");
-      }
+      const res = await axios.put(
+        `http://localhost:5000/auth/${selectedDoctor._id}`,
+        data
+      );
+      setRefetch(true);
+      setSelectedDoctor(null);
+      setSelectedDoctor(res.data.patient);
+      onOpenChange();
     } catch (error) {
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        console.error("Response error:", error.response);
-        if (error.response.status === 400) {
-          toast.error("Staff already exists");
-        } else {
-          toast.error(
-            `An error occurred: ${error.response.status} - ${error.response.data.message}`
-          );
-        }
-      } else if (error.request) {
-        // The request was made but no response was received
-        console.error("Request error:", error.request);
-        toast.error("No response received from the server");
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        console.error("Error:", error.message);
-        toast.error(`An error occurred: ${error.message}`);
-      }
-      console.error("Error adding staff:", error);
+      console.log(error);
     }
+
+    setRefetch(false);
   };
 
   const clearFormValues = () => {
     reset();
   };
+
+  setValue("username", selectedDoctor?.username);
+  setValue("idNumber", selectedDoctor?.idNumber);
+  setValue("phoneNumber", selectedDoctor?.phoneNumber);
+  setValue("bloodGroup", selectedDoctor?.bloodGroup);
+  setValue("address", selectedDoctor?.address);
+  setValue("email", selectedDoctor?.email);
+  setValue("dob", selectedDoctor?.dob);
+  // setValue("role", selectedDoctor?.role);
+  // setValue("slmcNumber", selectedDoctor?.slmcNumber);
+
   const selectedRole = watch("role");
   return (
     <Modal
@@ -107,7 +97,9 @@ const AddStaffModel = ({ isOpen, onOpenChange }) => {
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="flex flex-col gap-1">Add Staff</ModalHeader>
+            <ModalHeader className="flex flex-col gap-1">
+              Edit Doctor
+            </ModalHeader>
             <form onSubmit={handleSubmit(onSubmit)}>
               <ModalBody>
                 <div className="flex gap-5">
@@ -150,18 +142,16 @@ const AddStaffModel = ({ isOpen, onOpenChange }) => {
                     errorMessage={errors.email?.message}
                     isInvalid={errors.email}
                   />
-                  <DatePicker
-                    autoFocus
-                    label="Birth Date"
+                  <Input
+                    label="DOB"
+                    placeholder="Enter Date of Birth"
                     variant="bordered"
-                    showMonthAndYearPickers
-                    isRequired
-                    onChange={(date) => {
-                      setValue("dob", date);
-                    }}
+                    {...register("dob")}
+                    isDisabled
+                    value={selectedDoctor?.dob}
                   />
                 </div>
-                <div className="flex gap-5">
+                {/* <div className="flex gap-5">
                   <Select
                     items={roles}
                     label="Role"
@@ -189,9 +179,9 @@ const AddStaffModel = ({ isOpen, onOpenChange }) => {
                       errorMessage={errors.slmcNumber?.message}
                       {...register("slmcNumber")}
                       isInvalid={errors.slmcNumber}
-                    />
+                    />  
                   </div>
-                )}
+                )} */}
                 <div className="flex gap-5">
                   <Textarea
                     label="Address"
@@ -221,5 +211,4 @@ const AddStaffModel = ({ isOpen, onOpenChange }) => {
     </Modal>
   );
 };
-
-export default AddStaffModel;
+export default EditDoctorModel;

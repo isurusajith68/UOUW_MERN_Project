@@ -44,6 +44,31 @@ export const sendUsernamePassword = async (
   }
 };
 
+export const sendSmsStaffPassword = async (username, phoneNumber) => {
+  const password = generatePassword();
+  const phone = validPhoneNumber(phoneNumber);
+  const message = `Dear ${username}, Your password is ${password} Please use these credentials to login to the system.`;
+
+  const url = `https://app.notify.lk/api/v1/send`;
+
+  const params = {
+    user_id: process.env.USER_ID,
+    api_key: process.env.NOTFY_API_KEY,
+    sender_id: process.env.SENDER_ID,
+    to: phone,
+    message: message,
+  };
+
+  try {
+    const res = await axios.post(url, null, { params });
+    console.log(res.data);
+
+    return password;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const xRayDeliveredSms = async (firstName, lastName, phoneNumber) => {
   const message = `Dear ${firstName} ${lastName}, Your Xray has been delivered. Please collect it from the hospital.`;
 
@@ -82,4 +107,3 @@ const generatePassword = () => {
 const generateUsername = (firstName, lastName) => {
   return `${firstName}${lastName}`.toLowerCase();
 };
-

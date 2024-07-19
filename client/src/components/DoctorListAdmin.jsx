@@ -19,26 +19,27 @@ import EditPatientModel from "../modal/EditPatientModal";
 import { useEffect, useMemo, useState } from "react";
 import { Patient } from "../data/patients";
 import DeletePatientModel from "../modal/DeletePatientModel";
+import ClickShowMoreDoctor from "../modal/ClickShowMoreDoctor";
+import EditDoctorModel from "../modal/EditDoctorModel";
+import DeleteDoctorModel from "../modal/DeleteDoctorModel";
+import { useGlobalRefetch } from "../store/store";
 
 const DoctorListAdmin = () => {
   const [page, setPage] = useState(1);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [selectedDoctorId, setSelectedDoctorId] = useState(null);
   const [doctor, setDoctor] = useState([]);
+  const [refetch, setRefetch] = useState(false);
   const rowsPerPage = 6;
   const pages = Math.ceil(doctor.length / rowsPerPage);
 
+  const { globalRefetch, setGlobalRefetch } = useGlobalRefetch();
+  console.log(globalRefetch, "globalRefetch");
   const items = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
     return doctor?.slice(start, end);
   }, [page, doctor]);
-
-  const {
-    isOpen: isModalOpen,
-    onOpen: openModal,
-    onOpenChange: onModalChange,
-  } = useDisclosure();
 
   const {
     isOpen: isShowMoreOpen,
@@ -85,8 +86,13 @@ const DoctorListAdmin = () => {
     };
 
     fetchPatients();
-  }, []);
-
+  }, [refetch, globalRefetch]);
+  
+  useEffect(() => {
+    if (globalRefetch) {
+      setGlobalRefetch(false);
+    }
+  }, [globalRefetch, setGlobalRefetch]);
   console.log(doctor);
 
   return (
@@ -117,39 +123,65 @@ const DoctorListAdmin = () => {
             <TableColumn>Email</TableColumn>
             <TableColumn>Role</TableColumn>
             <TableColumn>Phone Number</TableColumn>
+            <TableColumn>Ac tion</TableColumn>
           </TableHeader>
           <TableBody>
-            {items.map((item, index) => (
-              <TableRow key={item.id}>
-                <TableCell>{index + 1}</TableCell>
-                <TableCell>{item.username}</TableCell>
-                <TableCell>{item.email}</TableCell>
-                <TableCell>{item.role}</TableCell>
-                <TableCell>{item.phoneNumber}</TableCell>
-              </TableRow>
-            ))}
+            {" "}
+            {items.map(
+              (item, index) =>
+                item.role === "doctor" && (
+                  <TableRow key={item.id}>
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{item.username}</TableCell>
+                    <TableCell>{item.email}</TableCell>
+                    <TableCell>{item.role}</TableCell>
+                    <TableCell>{item.phoneNumber}</TableCell>
+                    <TableCell className="flex gap-6">
+                      <Tooltip content="Details">
+                        <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                          <FaRegEye onClick={() => handleShowMore(item)} />
+                        </span>
+                      </Tooltip>
+                      <Tooltip content="Edit patient">
+                        <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                          <FaUserEdit onClick={() => handleEdit(item)} />
+                        </span>
+                      </Tooltip>
+                      <Tooltip color="danger" content="Delete patient">
+                        <span className="text-lg text-danger cursor-pointer active:opacity-50">
+                          <MdDeleteSweep
+                            onClick={() => handleDelete(item._id)}
+                          />
+                        </span>
+                      </Tooltip>
+                    </TableCell>
+                  </TableRow>
+                )
+            )}{" "}
           </TableBody>
         </Table>
       </div>
 
-      <AddPatientModel isOpen={isModalOpen} onOpenChange={onModalChange} />
-      <ClickShowMore
+      <ClickShowMoreDoctor
         isOpen={isShowMoreOpen}
         onOpenChange={onShowMoreChange}
-        patient={selectedDoctor}
+        doctor={selectedDoctor}
       />
-      <EditPatientModel
+      <EditDoctorModel
         isOpen={isEditOpen}
         onOpenChange={onEditChange}
         selectedDoctor={selectedDoctor}
         setSelectedDoctor={setSelectedDoctor}
+        setRefetch={setRefetch}
+        refetch={refetch}
       />
 
-      <DeletePatientModel
+      <DeleteDoctorModel
         isOpen={isDeleteOpen}
         onOpenChange={onDeleteChange}
         selectedDoctorId={selectedDoctorId}
         setSelectedDoctorId={setSelectedDoctorId}
+        setRefetch={setRefetch}
       />
     </div>
   );
