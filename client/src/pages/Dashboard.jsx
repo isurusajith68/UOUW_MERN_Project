@@ -5,6 +5,10 @@ import PatientsList from "../components/PatientsList";
 import PatientsListAdmin from "../components/PatientsListAdmin";
 import Layout from "../layout/Layout";
 import AddStaffModel from "../modal/AddStaffModel";
+import LabStaffList from "../components/LabStaffList";
+import XrayStaff from "../components/XrayStaff";
+import AttendantStaff from "../components/AttendentStaff";
+import PharmacyStaff from "../components/PharmacyStaff";
 
 const Dashboard = () => {
   const {
@@ -27,10 +31,21 @@ const Dashboard = () => {
           <DoctorListAdmin />
         </div>
         <div className="px-10 mt-2 py-5">
-          {/* <DoctorListAdmin /> */}
+          <LabStaffList />
+        </div>
+        <div className="px-10 mt-2 py-5">
+          <XrayStaff />
+        </div>
+
+        <div className="px-10 mt-2 py-5">
+          <AttendantStaff />
+        </div>
+
+        <div className="px-10 mt-2 py-5">
+          <PharmacyStaff />
         </div>
       </div>
-      <AddStaffModel isOpen={isModalOpen} onOpenChange={onModalChange}  />
+      <AddStaffModel isOpen={isModalOpen} onOpenChange={onModalChange} />
     </Layout>
   );
 };

@@ -16,6 +16,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { bloodGroups } from "../data/bloodGroups";
 import axios from "axios";
+import { useGlobalRefetch } from "../store/store";
 
 const schema = yup.object().shape({
   firstName: yup.string().required("First name is required"),
@@ -52,14 +53,14 @@ const EditPatientModel = ({
   } = useForm({
     resolver: yupResolver(schema),
   });
-
+ const { setGlobalRefetch } = useGlobalRefetch();
   const onSubmit = async (data) => {
     try {
       const res = await axios.put(
         `http://localhost:5000/auth/${selectedPatient._id}`,
         data
       );
-      setRefetch((prev) => !prev);
+      setGlobalRefetch((prev) => !prev);
       setSelectedPatient(null);
       setSelectedPatient(res.data.patient);
     } catch (error) {

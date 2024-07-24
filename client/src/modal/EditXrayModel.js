@@ -35,11 +35,11 @@ const schema = yup.object().shape({
   dob: yup.date().required("Date of birth is required"),
 });
 
-const EditDoctorModel = ({
+const EditXrayModel = ({
   isOpen,
   onOpenChange,
-  selectedDoctor,
-  setSelectedDoctor,
+  selectedXray,
+  setSelectedXray,
   setRefetch,
   refetch,
 }) => {
@@ -57,33 +57,31 @@ const EditDoctorModel = ({
   const onSubmit = async (data) => {
     try {
       const res = await axios.put(
-        `http://localhost:5000/auth/${selectedDoctor._id}`,
+        `http://localhost:5000/auth/${selectedXray._id}`,
         data
       );
-      setGlobalRefetch(true);
-      setSelectedDoctor(null);
-      setSelectedDoctor(res.data.patient);
+      setGlobalRefetch(!refetch);
+      setSelectedXray(null);
+      setSelectedXray(res.data.patient);
       onOpenChange();
     } catch (error) {
       console.log(error);
     }
-
-    
   };
 
   const clearFormValues = () => {
     reset();
   };
 
-  setValue("username", selectedDoctor?.username);
-  setValue("idNumber", selectedDoctor?.idNumber);
-  setValue("phoneNumber", selectedDoctor?.phoneNumber);
-  setValue("bloodGroup", selectedDoctor?.bloodGroup);
-  setValue("address", selectedDoctor?.address);
-  setValue("email", selectedDoctor?.email);
-  setValue("dob", selectedDoctor?.dob);
-  // setValue("role", selectedDoctor?.role);
-  // setValue("slmcNumber", selectedDoctor?.slmcNumber);
+  setValue("username", selectedXray?.username);
+  setValue("idNumber", selectedXray?.idNumber);
+  setValue("phoneNumber", selectedXray?.phoneNumber);
+  setValue("bloodGroup", selectedXray?.bloodGroup);
+  setValue("address", selectedXray?.address);
+  setValue("email", selectedXray?.email);
+  setValue("dob", selectedXray?.dob);
+  // setValue("role", selectedXray?.role);
+  // setValue("slmcNumber", selectedXray?.slmcNumber);
 
   const selectedRole = watch("role");
   return (
@@ -99,7 +97,7 @@ const EditDoctorModel = ({
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col gap-1">
-              Edit Doctor
+              Edit Lab Staff
             </ModalHeader>
             <form onSubmit={handleSubmit(onSubmit)}>
               <ModalBody>
@@ -149,7 +147,7 @@ const EditDoctorModel = ({
                     variant="bordered"
                     {...register("dob")}
                     isDisabled
-                    value={selectedDoctor?.dob}
+                    value={selectedXray?.dob}
                   />
                 </div>
                 {/* <div className="flex gap-5">
@@ -212,4 +210,4 @@ const EditDoctorModel = ({
     </Modal>
   );
 };
-export default EditDoctorModel;
+export default EditXrayModel;

@@ -35,11 +35,11 @@ const schema = yup.object().shape({
   dob: yup.date().required("Date of birth is required"),
 });
 
-const EditDoctorModel = ({
+const EditPharmacyModel = ({
   isOpen,
   onOpenChange,
-  selectedDoctor,
-  setSelectedDoctor,
+  selectedLaboraty,
+  setSelectedPharmacy,
   setRefetch,
   refetch,
 }) => {
@@ -53,37 +53,37 @@ const EditDoctorModel = ({
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const { setGlobalRefetch } = useGlobalRefetch();
+ const { setGlobalRefetch } = useGlobalRefetch();
   const onSubmit = async (data) => {
     try {
       const res = await axios.put(
-        `http://localhost:5000/auth/${selectedDoctor._id}`,
+        `http://localhost:5000/auth/${selectedLaboraty._id}`,
         data
       );
       setGlobalRefetch(true);
-      setSelectedDoctor(null);
-      setSelectedDoctor(res.data.patient);
+      setSelectedPharmacy(null);
+      setSelectedPharmacy(res.data.patient);
       onOpenChange();
     } catch (error) {
       console.log(error);
     }
 
-    
+   
   };
 
   const clearFormValues = () => {
     reset();
   };
 
-  setValue("username", selectedDoctor?.username);
-  setValue("idNumber", selectedDoctor?.idNumber);
-  setValue("phoneNumber", selectedDoctor?.phoneNumber);
-  setValue("bloodGroup", selectedDoctor?.bloodGroup);
-  setValue("address", selectedDoctor?.address);
-  setValue("email", selectedDoctor?.email);
-  setValue("dob", selectedDoctor?.dob);
-  // setValue("role", selectedDoctor?.role);
-  // setValue("slmcNumber", selectedDoctor?.slmcNumber);
+  setValue("username", selectedLaboraty?.username);
+  setValue("idNumber", selectedLaboraty?.idNumber);
+  setValue("phoneNumber", selectedLaboraty?.phoneNumber);
+  setValue("bloodGroup", selectedLaboraty?.bloodGroup);
+  setValue("address", selectedLaboraty?.address);
+  setValue("email", selectedLaboraty?.email);
+  setValue("dob", selectedLaboraty?.dob);
+  // setValue("role", selectedLaboraty?.role);
+  // setValue("slmcNumber", selectedLaboraty?.slmcNumber);
 
   const selectedRole = watch("role");
   return (
@@ -99,7 +99,7 @@ const EditDoctorModel = ({
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col gap-1">
-              Edit Doctor
+              Edit Lab Staff
             </ModalHeader>
             <form onSubmit={handleSubmit(onSubmit)}>
               <ModalBody>
@@ -149,7 +149,7 @@ const EditDoctorModel = ({
                     variant="bordered"
                     {...register("dob")}
                     isDisabled
-                    value={selectedDoctor?.dob}
+                    value={selectedLaboraty?.dob}
                   />
                 </div>
                 {/* <div className="flex gap-5">
@@ -212,4 +212,4 @@ const EditDoctorModel = ({
     </Modal>
   );
 };
-export default EditDoctorModel;
+export default EditPharmacyModel;

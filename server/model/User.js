@@ -39,6 +39,7 @@ const UserSchema = new mongoose.Schema({
       "receptionist",
       "rediologist",
       "patient",
+      "attendant"
     ],
     default: "patient",
   },
