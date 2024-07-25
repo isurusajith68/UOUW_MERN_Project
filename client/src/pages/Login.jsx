@@ -41,6 +41,8 @@ const Login = () => {
           navigate("/dashboard");
         } else if (res.data.user.role === "patient") {
           navigate("/dashboard/patient");
+        } else if (res.data.user.role === "doctor") {
+          navigate("/dashboard/doctor");
         }
       }
     } catch (error) {
