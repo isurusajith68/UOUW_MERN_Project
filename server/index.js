@@ -10,6 +10,8 @@ import { sendUsernamePassword } from "./utils/SendSMS.js";
 import path from "path";
 import multer from "multer";
 import nodemailer from "nodemailer";
+import Feedback from "./model/feedback.js";
+import User from "./model/User.js";
 // import staffRouter from "./routers/staffRouter.js";
 // import studentRouter from "./routers/studentRouter.js";
 // import assessmentRouter from "./routers/assessmentRouter.js";
@@ -63,6 +65,39 @@ app.post("/send-email", upload.single("attachment"), (req, res) => {
     res.status(200).send("Email sent: " + info.response);
   });
 });
+app.post("/feedback", async (req, res) => {
+  const { email, feedback, id } = req.body;
+  console.log(email);
 
+  try {
+    const user = await User.findById(id);
+
+    console.log(user);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    } else {
+      const data = await Feedback.create({
+        email,
+        feedback,
+        username: user.username,
+        image: "https://avatar.iran.liara.run/public",
+      });
+
+      res.status(201).json(data);
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.toString() });
+  }
+});
+
+app.get("/feedback", async (req, res) => {
+  try {
+    const data = await Feedback.find();
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500).json({ message: error.toString() });
+  }
+});
 app.get("/", (req, res) => res.send("Hello World!"));
 app.listen(port, () => console.log(`app listening on port ${port}!`));

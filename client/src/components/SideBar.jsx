@@ -1,4 +1,4 @@
-import { Button } from "@nextui-org/react";
+import { Button, useDisclosure } from "@nextui-org/react";
 import QRCode from "qrcode.react";
 import { useEffect, useState } from "react";
 import {
@@ -8,6 +8,7 @@ import {
   FaUserPen,
 } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import FeedBackModal from "../modal/FeedBackModal";
 const SideBar = () => {
   const pathname = window.location.pathname;
 
@@ -25,6 +26,19 @@ const SideBar = () => {
   const logOut = () => {
     localStorage.removeItem("authUser");
     window.location.href = "/login";
+  };
+
+  const {
+    isOpen: isModalOpen,
+    onOpen: openModal,
+    onOpenChange: onModalChange,
+  } = useDisclosure();
+
+  const ClickOpen = () => {
+    openModal();
+  };
+  const handleShowMore = () => {
+    openModal();
   };
 
   const handleDownload = () => {
@@ -181,7 +195,11 @@ const SideBar = () => {
       </div>
       <div className="px-4">
         {user?.role === "patient" && (
-          <Button className="mb-4  w-full " color="success">
+          <Button
+            className="mb-4  w-full "
+            color="success"
+            onClick={handleShowMore}
+          >
             Feedback
           </Button>
         )}
@@ -195,6 +213,11 @@ const SideBar = () => {
           © 2021 ENT Unit
         </h1>
       </div>
+      <FeedBackModal
+        user={user}
+        isOpen={isModalOpen}
+        onOpenChange={onModalChange}
+      />
     </div>
   );
 };
