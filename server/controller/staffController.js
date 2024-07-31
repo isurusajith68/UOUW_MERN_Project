@@ -20,7 +20,7 @@ export const staffRegister = async (req, res) => {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    const password = await sendSmsStaffPassword(username, phoneNumber);
+    const password = await sendSmsStaffPassword(username, phoneNumber, email);
 
     console.log(password);
 

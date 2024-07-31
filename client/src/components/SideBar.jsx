@@ -14,6 +14,7 @@ const SideBar = () => {
 
   const [user, setUser] = useState(null);
   console.log(user);
+
   useEffect(() => {
     const user = localStorage.getItem("authUser");
     if (!user) {
@@ -49,7 +50,28 @@ const SideBar = () => {
     link.download = "qrcode.png";
     link.click();
   };
-
+  useEffect(() => {
+    if (user) {
+      const userObj = JSON.parse(user);
+      if (userObj.role === "patient") {
+        window.location.href = "/dashboard/patient";
+      } else if (userObj.role === "doctor") {
+        window.location.href = "/dashboard/doctor";
+      } else if (userObj.role === "admin") {
+        window.location.href = "/dashboard";
+      } else if (userObj.role === "pharmacist") {
+        window.location.href = "/dashboard/pharmacy";
+      } else if (userObj.role === "laboratorist") {
+        window.location.href = "/dashboard/laboratory";
+      } else if (userObj.role === "rediologist") {
+        window.location.href = "/dashboard/x-ray";
+      } else if (userObj.role === "attendant") {
+        window.location.href = "/dashboard/attendant";
+      } else if (userObj.role === "registar") {
+        window.location.href = "/dashboard/add-patient";
+      }
+    }
+  }, []);
   return (
     <div className="sticky left-0 top-0 bg-gray-200 h-screen w-60  flex flex-col justify-between rounded-e-lg">
       <div>

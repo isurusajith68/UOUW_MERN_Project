@@ -1,7 +1,10 @@
+import { useEffect } from "react";
 import DashBordNav from "../components/DashBordNav";
 import SideBar from "../components/SideBar";
 
 const Layout = ({ children }) => {
+  
+
   return (
     <div className="flex w-screen ">
       <SideBar />

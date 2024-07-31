@@ -48,28 +48,30 @@ const Laboratory = () => {
   // console.log(x[x.length - 1].xray);
   useEffect(() => {
     const fetchReport = async () => {
-      try {
-        // const response = await fetch(`http://localhost:5000/patients/${id}`, {
-        const response = await fetch(
-          `http://localhost:5000/medical-record/lab/${datac?._id}`,
-          {
-            headers: { "Content-Type": "application/json" },
+      if (datac) {
+        try {
+          // const response = await fetch(`http://localhost:5000/patients/${id}`, {
+          const response = await fetch(
+            `http://localhost:5000/medical-record/lab/${datac?._id}`,
+            {
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+
+          if (response.status === 404) {
+            toast.error("report not found.");
+          } else if (response.status === 200) {
+            const data = await response.json();
+            const report = data;
+
+            setLab(report);
+            toast.success("Successfully retrieved report.");
           }
-        );
-
-        if (response.status === 404) {
-          toast.error("report not found.");
-        } else if (response.status === 200) {
-          const data = await response.json();
-          const report = data;
-
-          setLab(report);
-          toast.success("Successfully retrieved report.");
+        } catch (error) {
+          console.error("Error retrieving report:", error);
+          toast.error("Failed to retrieve report.");
+        } finally {
         }
-      } catch (error) {
-        console.error("Error retrieving report:", error);
-        toast.error("Failed to retrieve report.");
-      } finally {
       }
     };
     fetchReport();
@@ -229,7 +231,7 @@ const Laboratory = () => {
               // ))
             }
           </div>
-          <div className="w-full flex justify-center mt-10 flex-col">
+          <div className="ml-[120px] gap-2 flex justify-center mt-10 flex-col w-[550px]">
             <input
               type="file"
               placeholder="Enter Lab Report"

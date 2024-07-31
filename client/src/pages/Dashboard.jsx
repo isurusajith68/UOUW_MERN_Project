@@ -9,6 +9,7 @@ import LabStaffList from "../components/LabStaffList";
 import XrayStaff from "../components/XrayStaff";
 import AttendantStaff from "../components/AttendentStaff";
 import PharmacyStaff from "../components/PharmacyStaff";
+import { useEffect } from "react";
 
 const Dashboard = () => {
   const {
@@ -16,6 +17,9 @@ const Dashboard = () => {
     onOpen: openModal,
     onOpenChange: onModalChange,
   } = useDisclosure();
+
+  
+
   return (
     <Layout>
       <div className="flex items-center justify-center flex-col ">

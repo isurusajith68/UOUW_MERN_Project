@@ -20,7 +20,7 @@ const DeletePatientModel = ({
       try {
         axios.delete(`http://localhost:5000/patients/${selectedPatientId}`);
         setSelectedPatientId(null);
-        setRefetch((prev) => !prev);
+        setRefetch(true);
       } catch (error) {
         console.log(error);
       }

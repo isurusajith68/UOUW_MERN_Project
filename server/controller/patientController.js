@@ -1,4 +1,5 @@
 import Patients from "../model/Patients.js";
+import User from "../model/User.js";
 import { sendUsernamePassword } from "../utils/SendSMS.js";
 
 export const getPatients = async (req, res) => {
@@ -40,20 +41,27 @@ export const createPatient = async (req, res) => {
       address,
     } = req.body;
 
-    const patient = await Patients.create({
-      firstName,
-      lastName,
-      idNumber,
-      phoneNumber,
+    const existing = await User.findOne({
       email,
-      dob,
-      bloodGroup,
-      address,
     });
 
-    sendUsernamePassword(firstName, lastName, phoneNumber, email);
+    if (existing) {
+      return res.status(400).json({ message: "User already exists" });
+    } else {
+      const patient = await Patients.create({
+        firstName,
+        lastName,
+        idNumber,
+        phoneNumber,
+        email,
+        dob,
+        bloodGroup,
+        address,
+      });
+      sendUsernamePassword(firstName, lastName, phoneNumber, email);
 
-    res.status(201).json({ patient });
+      res.status(201).json({ patient });
+    }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -106,6 +114,7 @@ export const deletePatient = async (req, res) => {
     if (!patient) {
       return res.status(404).json({ message: "Patient not found" });
     }
+    
 
     await patient.deleteOne({ _id: id });
 

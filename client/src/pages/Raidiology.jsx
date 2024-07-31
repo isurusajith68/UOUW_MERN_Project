@@ -37,28 +37,30 @@ const Radiology = () => {
   // console.log(x[x.length - 1].xray);
   useEffect(() => {
     const fetchXrayData = async () => {
-      try {
-        // const response = await fetch(`http://localhost:5000/patients/${id}`, {
-        const response = await fetch(
-          `http://localhost:5000/medical-record/xray/${datac?._id}`,
-          {
-            headers: { "Content-Type": "application/json" },
+      if (datac) {
+        try {
+          // const response = await fetch(`http://localhost:5000/patients/${id}`, {
+          const response = await fetch(
+            `http://localhost:5000/medical-record/xray/${datac?._id}`,
+            {
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+
+          if (response.status === 404) {
+            toast.error("Xray not found.");
+          } else if (response.status === 200) {
+            const data = await response.json();
+            const xray = data;
+
+            setX(xray);
+            toast.success("Successfully retrieved Xray.");
           }
-        );
-
-        if (response.status === 404) {
-          toast.error("Xray not found.");
-        } else if (response.status === 200) {
-          const data = await response.json();
-          const xray = data;
-
-          setX(xray);
-          toast.success("Successfully retrieved Xray.");
+        } catch (error) {
+          console.error("Error retrieving Xray:", error);
+          toast.error("Failed to retrieve Xray.");
+        } finally {
         }
-      } catch (error) {
-        console.error("Error retrieving Xray:", error);
-        toast.error("Failed to retrieve Xray.");
-      } finally {
       }
     };
     fetchXrayData();

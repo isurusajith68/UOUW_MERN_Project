@@ -19,6 +19,7 @@ import { bloodGroups } from "../data/bloodGroups";
 import QrModal from "./QrModal";
 import axios from "axios";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const schema = yup.object().shape({
   firstName: yup.string().required("First name is required"),
@@ -65,10 +66,14 @@ const AddPatientModel = ({ isOpen, onOpenChange, setRefetch }) => {
 
       setQrId(res.data.patient._id);
       setPatientsData(res.data.patient);
-      setRefetch((prev) => !prev);
+      setRefetch(true);
       openQr();
+
+      // console.log(res.data);
     } catch (error) {
-      console.log(error);
+      if (error?.response) {
+       toast.error(error.response.data.message);
+      }
     }
   };
 

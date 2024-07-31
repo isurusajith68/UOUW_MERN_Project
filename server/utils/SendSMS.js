@@ -44,10 +44,10 @@ export const sendUsernamePassword = async (
   }
 };
 
-export const sendSmsStaffPassword = async (username, phoneNumber) => {
+export const sendSmsStaffPassword = async (username, phoneNumber, email) => {
   const password = generatePassword();
   const phone = validPhoneNumber(phoneNumber);
-  const message = `Dear ${username}, Your password is ${password} Please use these credentials to login to the system.`;
+  const message = `Dear ${username},Your email is ${email} Your password is ${password} Please use these credentials to login to the system.`;
 
   const url = `https://app.notify.lk/api/v1/send`;
 

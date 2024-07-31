@@ -28,12 +28,9 @@ const ScanQrModalRaidiology = ({ isOpen, onOpenChange, setData }) => {
     setLoading(true);
     try {
       // const response = await fetch(`http://localhost:5000/patients/${id}`, {
-      const response = await fetch(
-        `http://localhost:5000/patients/668d8970590b23eda33bd3f9`,
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      const response = await fetch(`http://localhost:5000/patients/${id}`, {
+        headers: { "Content-Type": "application/json" },
+      });
 
       if (response.status === 404) {
         toast.error("Patient not found.");

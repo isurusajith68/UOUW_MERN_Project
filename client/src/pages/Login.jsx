@@ -43,6 +43,16 @@ const Login = () => {
           navigate("/dashboard/patient");
         } else if (res.data.user.role === "doctor") {
           navigate("/dashboard/doctor");
+        } else if (res.data.user.role === "registar") {
+          navigate("/dashboard/add-patient");
+        } else if (res.data.user.role === "attendant") {
+          navigate("/dashboard/attendant");
+        } else if (res.data.user.role === "laboratorist") {
+          navigate("/dashboard/laboratory");
+        } else if (res.data.user.role === "rediologist") {
+          navigate("/dashboard/x-ray");
+        } else if (res.data.user.role === "pharmacist") {
+          navigate("/dashboard/pharmacy");
         }
       }
     } catch (error) {

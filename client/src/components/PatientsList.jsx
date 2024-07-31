@@ -25,6 +25,7 @@ const PatientsList = () => {
   const [selectedPatientId, setSelectedPatientId] = useState(null);
   const [Patient, setPatient] = useState([]);
   const [refetch, setRefetch] = useState(false);
+  const [refetchsss, setRefetchsss] = useState(false);
   const [refetchc, setRefcetch] = useState(false);
 
   const rowsPerPage = 6;
@@ -87,7 +88,7 @@ const PatientsList = () => {
     };
 
     fetchPatients();
-  }, [refetch]);
+  }, [refetch, refetchsss]);
 
   return (
     <div>
@@ -176,7 +177,7 @@ const PatientsList = () => {
         onOpenChange={onDeleteChange}
         selectedPatientId={selectedPatientId}
         setSelectedPatientId={setSelectedPatientId}
-        setRefetch={setRefetch}
+        setRefetch={setRefetchsss}
       />
     </div>
   );
