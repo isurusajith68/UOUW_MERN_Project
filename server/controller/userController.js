@@ -66,7 +66,7 @@ export const getUserById = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { username, email, password, role } = req.body;
+    const { username, email, password, role, phoneNumber } = req.body;
 
     const user = await User.findById(id);
 
@@ -78,6 +78,7 @@ export const updateUser = async (req, res) => {
     user.email = email || user.email;
     user.password = password || user.password;
     user.role = role || user.role;
+    user.phoneNumber = phoneNumber || user.phoneNumber;
 
     const updatedUser = await user.save();
 

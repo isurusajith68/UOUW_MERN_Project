@@ -79,7 +79,14 @@ const DoctorListAdmin = () => {
       try {
         const res = await fetch("http://localhost:5000/auth");
         const data = await res.json();
-        setDoctor(data.users);
+
+        const u = data.users;
+
+        const doctors = u.filter((item) => item.role === "doctor");
+
+        setDoctor(doctors);
+
+  
       } catch (error) {
         console.log(error);
       }
@@ -87,7 +94,8 @@ const DoctorListAdmin = () => {
 
     fetchPatients();
   }, [refetch, globalRefetch]);
-  
+
+  console.log(doctor);
   useEffect(() => {
     if (globalRefetch) {
       setGlobalRefetch(false);

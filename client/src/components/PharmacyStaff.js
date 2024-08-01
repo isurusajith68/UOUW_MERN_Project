@@ -86,7 +86,11 @@ const PharmacyStaff = () => {
       try {
         const res = await fetch("http://localhost:5000/auth");
         const data = await res.json();
-        setPharmacy(data.users);
+        const u = data.users;
+
+        const Pharmacy = u.filter((item) => item.role === "pharmacist");
+        console.log(Pharmacy);
+        setPharmacy(Pharmacy);
       } catch (error) {
         console.log(error);
       }

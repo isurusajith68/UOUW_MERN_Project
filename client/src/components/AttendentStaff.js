@@ -86,7 +86,11 @@ const AttendantStaff = () => {
       try {
         const res = await fetch("http://localhost:5000/auth");
         const data = await res.json();
-        setAttendant(data.users);
+        const u = data.users;
+
+        const attendant = u.filter((item) => item.role === "attendant");
+        console.log(attendant);
+        setAttendant(attendant);
       } catch (error) {
         console.log(error);
       }

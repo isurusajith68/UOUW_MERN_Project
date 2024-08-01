@@ -26,23 +26,31 @@ import { useGlobalRefetch } from "../store/store";
 import EditlaboratoristModel from "../modal/EditlaboratoristModel";
 import ClickShowMorelaboratorist from "../modal/ClickShowMorelaboratorist";
 import DeletelaboratoristModel from "../modal/DeletelaboratoristModel";
+import ClickShowMorePharmacy from "../modal/ClickShowMorePharmacy";
+import EditPharmacyModel from "../modal/EditPharmacyModel";
+import DeletePharmacyModel from "../modal/DeletePharmacyModel";
+import DeleteReModel from "../modal/DeleteReModel";
+import EditReModel from "../modal/EditReModel";
+import ClickShowMoreRe from "../modal/ClickShowMoreRe";
 
-const LabStaffList = () => {
+const RegistarStaff = () => {
   const [page, setPage] = useState(1);
-  const [selectedLaboratory, setSelectedLaboratory] = useState(null);
-  const [selectedLaboratoryId, setSelectedLaboratoryId] = useState(null);
-  const [laboratory, setLaboratory] = useState([]);
+  const [selectedRegistar, setSelectedRegistar] = useState(null);
+  const [selectedRegistarId, setSelectedRegistarId] = useState(null);
+  const [register, setRegister] = useState([]);
   const [refetch, setRefetch] = useState(false);
   const rowsPerPage = 6;
-  const pages = Math.ceil(laboratory.length / rowsPerPage);
+  const pages = Math.ceil(register.length / rowsPerPage);
 
   const { globalRefetch, setGlobalRefetch } = useGlobalRefetch();
-  console.log(globalRefetch, "globalRefetch");
+
   const items = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
-    return laboratory?.slice(start, end);
-  }, [page, laboratory]);
+    return register?.slice(start, end);
+  }, [page, register]);
+
+  console.log(register, "register3");
 
   const {
     isOpen: isShowMoreOpen,
@@ -62,18 +70,18 @@ const LabStaffList = () => {
     onOpenChange: onDeleteChange,
   } = useDisclosure();
 
-  const handleShowMore = (laboratory) => {
-    setSelectedLaboratory(laboratory);
+  const handleShowMore = (registar) => {
+    setSelectedRegistar(registar);
     openShowMore();
   };
 
-  const handleEdit = (laboratory) => {
-    setSelectedLaboratory(laboratory);
+  const handleEdit = (registar) => {
+    setSelectedRegistar(registar);
     openEdit();
   };
 
   const handleDelete = (id) => {
-    setSelectedLaboratoryId(id);
+    setSelectedRegistarId(id);
     openDelete();
     console.log(id, "id");
   };
@@ -85,9 +93,9 @@ const LabStaffList = () => {
         const data = await res.json();
         const u = data.users;
 
-        const laboratory = u.filter((item) => item.role === "laboratorist");
-      
-        setLaboratory(laboratory);
+        const reg = u.filter((item) => item.role === "registar");
+
+        setRegister(reg);
       } catch (error) {
         console.log(error);
       }
@@ -105,7 +113,7 @@ const LabStaffList = () => {
   return (
     <div>
       <div className="flex justify-between p-2">
-        <h1 className="text-center mt-2 font-semibold">Laboratory List</h1>
+        <h1 className="text-center mt-2 font-semibold">Registar List</h1>
       </div>
       <div className="w-[1000px] mt-2">
         <Table
@@ -130,13 +138,13 @@ const LabStaffList = () => {
             <TableColumn>Email</TableColumn>
             <TableColumn>Role</TableColumn>
             <TableColumn>Phone Number</TableColumn>
-            <TableColumn>Ac tion</TableColumn>
+            <TableColumn>Action</TableColumn>
           </TableHeader>
           <TableBody>
             {" "}
             {items.map(
               (item, index) =>
-                item.role === "laboratorist" && (
+                item.role === "registar" && (
                   <TableRow key={item.id}>
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{item.username}</TableCell>
@@ -169,29 +177,29 @@ const LabStaffList = () => {
         </Table>
       </div>
 
-      <ClickShowMorelaboratorist
+      <ClickShowMoreRe
         isOpen={isShowMoreOpen}
         onOpenChange={onShowMoreChange}
-        laboratory={selectedLaboratory}
+        registar={selectedRegistar}
       />
-      <EditlaboratoristModel
+      <EditReModel
         isOpen={isEditOpen}
         onOpenChange={onEditChange}
-        selectedLaboraty={selectedLaboratory}
-        setSelectedLaboratory={setSelectedLaboratory}
+        selectedRegistar={selectedRegistar}
+        setSelectedRegistar={setSelectedRegistar}
         setRefetch={setRefetch}
         refetch={refetch}
       />
 
-      <DeletelaboratoristModel
+      <DeleteReModel
         isOpen={isDeleteOpen}
         onOpenChange={onDeleteChange}
-        selectedLaboratoryId={selectedLaboratoryId}
-        setSelectedLaboratoryId={setSelectedLaboratoryId}
+        selectedRegistarId={selectedRegistarId}
+        setSelectedRegistarId={setSelectedRegistarId}
         setRefetch={setRefetch}
       />
     </div>
   );
 };
 
-export default LabStaffList;
+export default RegistarStaff;

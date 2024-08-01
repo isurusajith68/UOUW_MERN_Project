@@ -86,7 +86,11 @@ const XrayStaff = () => {
       try {
         const res = await fetch("http://localhost:5000/auth");
         const data = await res.json();
-        setXray(data.users);
+        const u = data.users;
+
+        const xray = u.filter((item) => item.role === "rediologist");
+        console.log(xray);
+        setXray(xray);
       } catch (error) {
         console.log(error);
       }

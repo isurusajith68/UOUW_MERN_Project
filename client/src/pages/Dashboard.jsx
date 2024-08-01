@@ -10,6 +10,7 @@ import XrayStaff from "../components/XrayStaff";
 import AttendantStaff from "../components/AttendentStaff";
 import PharmacyStaff from "../components/PharmacyStaff";
 import { useEffect } from "react";
+import RegistarStaff from "../components/RegistarStaff";
 
 const Dashboard = () => {
   const {
@@ -47,6 +48,10 @@ const Dashboard = () => {
 
         <div className="px-10 mt-2 py-5">
           <PharmacyStaff />
+        </div>
+
+        <div className="px-10 mt-2 py-5">
+          <RegistarStaff />
         </div>
       </div>
       <AddStaffModel isOpen={isModalOpen} onOpenChange={onModalChange} />
